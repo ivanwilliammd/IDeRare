@@ -19,3 +19,4 @@
    - Language Reference Set : ```sct2_sRefset_LanguageSnapshot-en_INT_*.txt``` file.
    - Replace * with the release version you downloaded, replace INT with the language code of the release (if you didn't use reference).
 3. Run ```Generate SNOMED ORPHA Subset.ipynb``` to generate the subset.
+4. Resulting file between ```20240301 International SNOMED-CT RF2``` and ```20230731 Orphanet Map``` saved at ```subset``` folder named ```snomed2orpha_subset.tsv```.
