@@ -172,5 +172,14 @@ echo "alias exomiser=\"java -jar $TARGET_PATH/exomiser/exomiser-cli-13.3.0.jar\"
 
 # Source ~/.bashrc to apply changes
 source ~/.bashrc
-
 echo "Aliases added to ~/.bashrc"
+
+# Install Python Dependencies Required
+echo "Removing old iderare environment"
+conda remove --name iderare --all
+conda create --name iderare python=3.8
+conda activate iderare
+conda install pandas pyyaml numpy
+pip install obonet
+echo "Install Python Dependencies"
+conda activate iderare

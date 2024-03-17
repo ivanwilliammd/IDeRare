@@ -17,13 +17,21 @@ IDeRare or *"Indonesia Exome Rare Disease Variant Discovery Pipeline"* is simple
 git clone https://github.com/ivanwilliammd/IDeRare
 ```
 2. Have a Linux environment (Ubuntu or Ubuntu-like 22.04 LTS distro is recommended)
-3. Install [Docker](https://docs.docker.com/engine/install/ubuntu/) and [Anaconda - optional](https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html)- see [Prerequisite.md](Prerequisite.md) for more details
+3. Install [Docker](https://docs.docker.com/engine/install/ubuntu/) and [Anaconda - optional](https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html)- see [Prerequisite.md](installation/Prerequisite.md) for more details
 4. Run dependency installation script and database script
 ```bash
+cd installation
 source install_dependencies.sh
 source download_database.sh
+cd ../
 ```
-2. Set the data, directory file reference and trio information on ```iderare.yml```.<br><br> 
+5. **Optional** : translate the coded clinical information (mixture of SNOMED-CT, Orphanet, HPO) separated by enter at ```clinical_information.txt``` file. <br><br>
+This will update the ```iderare.yml``` *hpo_ids* section with the HPO code, and show the non-matched SNOMED-CT code in terminal.
+```bash
+conda activate iderare
+python iderare_phentl.py
+```
+1. Set the data, directory file reference and trio information on ```iderare.yml```.<br><br> 
 **Note** : all exome files should be located in the ```input/A_FASTQ``` folder of absolute path setup by ```data_dir``` at ```iderare.yml```
 <br><br>
 ![File Structure](picture/01.png)
