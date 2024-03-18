@@ -7,6 +7,7 @@ analysis:
   # 2. Ensure file name is cleaned .fq.gz, if your file is raw untrimmed fastq, adjust pipeline_template.sh, uncomment Step 0
   # 3. Insert proband, mother, father file name (not full path) without .fq.gz file
   # 4. File should be prepared on {data_dir}/input/A_FASTQ
+  # This data source follow the original data sourced from this link : https://www.ncbi.nlm.nih.gov/sra?linkname=bioproject_sra_all&from_uid=1077459
   proband: V350145665_L04_B5EHOMdmhwXAAAA-515
   mother: V350145665_L04_B5EHOMdmhwXAABA-517
   father: V350145665_L04_B5EHOMdmhwXAACA-519

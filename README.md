@@ -38,18 +38,30 @@ source install_dependencies.sh
 source download_database.sh
 cd ../
 ```
-5. **Optional** : translate the coded clinical information (mixture of SNOMED-CT, Orphanet, HPO) separated by enter at ```clinical_information.txt``` file. <br><br>
+5. **Optional** : translate the coded clinical information (mixture of SNOMED-CT, Orphanet, HPO) separated by enter at ```clinical_data.txt``` file. <br><br>
 This will update the ```iderare.yml``` *hpo_ids* section with the HPO code, and show the non-matched SNOMED-CT code in terminal.
 ```bash
 conda activate iderare
 python iderare_phentl.py
 ```
-1. Set the data, directory file reference and trio information on ```iderare.yml```.<br><br> 
+<br> Example of ```clinical_data.txt``` file
+```txt
+SNOMEDCT:11179002 // Differential Diagnosis 1 : Glycogen storage disease, type IV (disorder)
+SNOMEDCT:65959000 // Differential Diagnosis 2 : Beta thalassemia (disorder)
+SNOMEDCT:258211005 // Inheritance pattern : Autosomal recessive inheritance (qualifier value)
+SNOMEDCT:165397008 // Laboratory finding : Hemoglobin low (finding)
+SNOMEDCT:80515008 // Physical examination finding : Hepatomegaly
+ORPHA:442835
+HP:0040283
+SNOMEDCT:11179002
+ORPHA:848
+```
+6. Set the data, directory file reference and trio information on ```iderare.yml```.<br><br> 
 **Note** : all exome files should be located in the ```input/A_FASTQ``` folder of absolute path setup by ```data_dir``` at ```iderare.yml```
 <br><br>
 ![File Structure](picture/01.png)
 ![Example File](picture/02.png)
-1. Run the bash script
+7. Run the bash script
 ```bash
 source iderare.sh
 ```
