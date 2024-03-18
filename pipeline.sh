@@ -80,345 +80,345 @@ cd /home/ivanwilliamharsono/Downloads/trio_patient
 ## Make Directory
 mkdir -p ${INPUT_DIR} ${FASTQ_DIR} ${SAM_DIR} ${OUTPUT_DIR} ${OUTPUT_DIR}/intermediate_results_dir_proband ${OUTPUT_DIR}/intermediate_results_dir_trio ${ANNOTATED_DIR} ${SV_DIR} ${EXOMISER_DIR}
 
-# # -------------------
-# # STEP 1: QC - Run fastqp 
-# # -------------------
-# echo "STEP 1: QC - Run fastqp - Optional (if the input is raw untrimmed fastq)"
-# # echo "STEP 1a : Proband"
+# -------------------
+# STEP 1: QC - Run fastqp 
+# -------------------
+echo "STEP 1: QC - Run fastqp - Optional (if the input is raw untrimmed fastq)"
+# echo "STEP 1a : Proband"
 
-# # fastp -g -x -w $(nproc) \
-# #     -D --dup_calc_accuracy 6 \
-# #     --in1 ${FASTQ_DIR}/${proband_name}_1.fastq \
-# #     --in2 ${FASTQ_DIR}/${proband_name}_2.fastq \
-# #     --out1 ${FASTQ_DIR}/${proband_name}_1.fq.gz \
-# #     --out2 ${FASTQ_DIR}/${proband_name}_2.fq.gz \
-# #     -h ${FASTQ_DIR}/${proband_name}.html \
-# #     -j ${FASTQ_DIR}/${proband_name}.json \
-# #     -R ${proband_name}-${proband_SM}
+# fastp -g -x -w $(nproc) \
+#     -D --dup_calc_accuracy 6 \
+#     --in1 ${FASTQ_DIR}/${proband_name}_1.fastq \
+#     --in2 ${FASTQ_DIR}/${proband_name}_2.fastq \
+#     --out1 ${FASTQ_DIR}/${proband_name}_1.fq.gz \
+#     --out2 ${FASTQ_DIR}/${proband_name}_2.fq.gz \
+#     -h ${FASTQ_DIR}/${proband_name}.html \
+#     -j ${FASTQ_DIR}/${proband_name}.json \
+#     -R ${proband_name}-${proband_SM}
 
-# # echo "STEP 1b : Mother"
+# echo "STEP 1b : Mother"
 
-# # fastp -g -x -w $(nproc) \
-# #     -D --dup_calc_accuracy 6 \
-# #     --in1 ${FASTQ_DIR}/${mother_name}_1.fastq \
-# #     --in2 ${FASTQ_DIR}/${mother_name}_2.fastq \
-# #     --out1 ${FASTQ_DIR}/${mother_name}_1.fq.gz \
-# #     --out2 ${FASTQ_DIR}/${mother_name}_2.fq.gz \
-# #     -h ${FASTQ_DIR}/${mother_name}.html \
-# #     -j ${FASTQ_DIR}/${mother_name}.json \
-# #     -R ${mother_name}-${mother_SM}
+# fastp -g -x -w $(nproc) \
+#     -D --dup_calc_accuracy 6 \
+#     --in1 ${FASTQ_DIR}/${mother_name}_1.fastq \
+#     --in2 ${FASTQ_DIR}/${mother_name}_2.fastq \
+#     --out1 ${FASTQ_DIR}/${mother_name}_1.fq.gz \
+#     --out2 ${FASTQ_DIR}/${mother_name}_2.fq.gz \
+#     -h ${FASTQ_DIR}/${mother_name}.html \
+#     -j ${FASTQ_DIR}/${mother_name}.json \
+#     -R ${mother_name}-${mother_SM}
 
-# # echo "STEP 1C : Father"
+# echo "STEP 1C : Father"
 
-# # fastp -g -x -w $(nproc) \
-# #     -D --dup_calc_accuracy 6 \
-# #     --in1 ${FASTQ_DIR}/${father_name}_1.fastq \
-# #     --in2 ${FASTQ_DIR}/${father_name}_2.fastq \
-# #     --out1 ${FASTQ_DIR}/${father_name}_1.fq.gz \
-# #     --out2 ${FASTQ_DIR}/${father_name}_2.fq.gz \
-# #     -h ${FASTQ_DIR}/${father_name}.html \
-# #     -j ${FASTQ_DIR}/${father_name}.json \
-# #     -R ${father_name}-${father_SM}
+# fastp -g -x -w $(nproc) \
+#     -D --dup_calc_accuracy 6 \
+#     --in1 ${FASTQ_DIR}/${father_name}_1.fastq \
+#     --in2 ${FASTQ_DIR}/${father_name}_2.fastq \
+#     --out1 ${FASTQ_DIR}/${father_name}_1.fq.gz \
+#     --out2 ${FASTQ_DIR}/${father_name}_2.fq.gz \
+#     -h ${FASTQ_DIR}/${father_name}.html \
+#     -j ${FASTQ_DIR}/${father_name}.json \
+#     -R ${father_name}-${father_SM}
 
-# # --------------------------------------
-# # STEP 2: Map to reference using BWA-MEM2
-# # --------------------------------------
-# echo "STEP 2: Map to reference using BWA-MEM2"
+# --------------------------------------
+# STEP 2: Map to reference using BWA-MEM2
+# --------------------------------------
+echo "STEP 2: Map to reference using BWA-MEM2"
 
-# echo "STEP 2a : Proband"
+echo "STEP 2a : Proband"
 
-# # BWA MEM2 Alignment
-# bwa-mem2 mem -R "@RG\tID:${proband_name}\tSM:${proband_SM}\tPU:${proband_PU}\tPL:${proband_PL}\tLB:${proband_LB}" \
-#     -t $(nproc) ${REFERENCE_DIR}/${REFSEQ_FASTA} \
-#     ${FASTQ_DIR}/${proband_name}_1.fq.gz \
-#     ${FASTQ_DIR}/${proband_name}_2.fq.gz \
-#     > ${SAM_DIR}/${proband_name}_raw.sam
+# BWA MEM2 Alignment
+bwa-mem2 mem -R "@RG\tID:${proband_name}\tSM:${proband_SM}\tPU:${proband_PU}\tPL:${proband_PL}\tLB:${proband_LB}" \
+    -t $(nproc) ${REFERENCE_DIR}/${REFSEQ_FASTA} \
+    ${FASTQ_DIR}/${proband_name}_1.fq.gz \
+    ${FASTQ_DIR}/${proband_name}_2.fq.gz \
+    > ${SAM_DIR}/${proband_name}_raw.sam
 
-# echo "STEP 2b : Mother"
+echo "STEP 2b : Mother"
 
-# bwa-mem2 mem -R "@RG\tID:${mother_name}\tSM:${mother_SM}\tPU:${mother_PU}\tPL:${mother_PL}\tLB:${mother_LB}" \
-#     -t $(nproc) ${REFERENCE_DIR}/${REFSEQ_FASTA} \
-#     ${FASTQ_DIR}/${mother_name}_1.fq.gz \
-#     ${FASTQ_DIR}/${mother_name}_2.fq.gz \
-#     > ${SAM_DIR}/${mother_name}_raw.sam
+bwa-mem2 mem -R "@RG\tID:${mother_name}\tSM:${mother_SM}\tPU:${mother_PU}\tPL:${mother_PL}\tLB:${mother_LB}" \
+    -t $(nproc) ${REFERENCE_DIR}/${REFSEQ_FASTA} \
+    ${FASTQ_DIR}/${mother_name}_1.fq.gz \
+    ${FASTQ_DIR}/${mother_name}_2.fq.gz \
+    > ${SAM_DIR}/${mother_name}_raw.sam
 
-# echo "STEP 2c : Father"
+echo "STEP 2c : Father"
 
-# bwa-mem2 mem -R "@RG\tID:${father_name}\tSM:${father_SM}\tPU:${father_PU}\tPL:${father_PL}\tLB:${father_LB}" \
-#     -t $(nproc) ${REFERENCE_DIR}/${REFSEQ_FASTA} \
-#     ${FASTQ_DIR}/${father_name}_1.fq.gz \
-#     ${FASTQ_DIR}/${father_name}_2.fq.gz \
-#     > ${SAM_DIR}/${father_name}_raw.sam
+bwa-mem2 mem -R "@RG\tID:${father_name}\tSM:${father_SM}\tPU:${father_PU}\tPL:${father_PL}\tLB:${father_LB}" \
+    -t $(nproc) ${REFERENCE_DIR}/${REFSEQ_FASTA} \
+    ${FASTQ_DIR}/${father_name}_1.fq.gz \
+    ${FASTQ_DIR}/${father_name}_2.fq.gz \
+    > ${SAM_DIR}/${father_name}_raw.sam
 
-# # -----------------------------------------
-# # STEP 3: Mark Duplicates and Sort - sambamba
-# # -----------------------------------------
-# echo "STEP 3: Mark Duplicates and Sort - Sambamba"
+# -----------------------------------------
+# STEP 3: Mark Duplicates and Sort - sambamba
+# -----------------------------------------
+echo "STEP 3: Mark Duplicates and Sort - Sambamba"
 
-# # Conversion of SAM to BAM & Markdup
-# echo "STEP 3a : Proband"
+# Conversion of SAM to BAM & Markdup
+echo "STEP 3a : Proband"
 
-# sambamba view -p -t=$(nproc) -l=9 \
-#     -S ${SAM_DIR}/${proband_name}_raw.sam \
-#     -f=bam -o=${SAM_DIR}/${proband_name}_raw.bam
+sambamba view -p -t=$(nproc) -l=9 \
+    -S ${SAM_DIR}/${proband_name}_raw.sam \
+    -f=bam -o=${SAM_DIR}/${proband_name}_raw.bam
 
-# sambamba markdup -r -p -t=$(nproc) -l=9 \
-#     ${SAM_DIR}/${proband_name}_raw.bam \
-#     ${SAM_DIR}/${proband_name}_dedup.bam
+sambamba markdup -r -p -t=$(nproc) -l=9 \
+    ${SAM_DIR}/${proband_name}_raw.bam \
+    ${SAM_DIR}/${proband_name}_dedup.bam
 
-# sambamba sort -m=${memory} -p -t=$(nproc) -l=9 \
-#     ${SAM_DIR}/${proband_name}_dedup.bam \
-#     -o=${INPUT_DIR}/${proband_name}.bam
+sambamba sort -m=${memory} -p -t=$(nproc) -l=9 \
+    ${SAM_DIR}/${proband_name}_dedup.bam \
+    -o=${INPUT_DIR}/${proband_name}.bam
 
-# echo "STEP 3b : Mother"
+echo "STEP 3b : Mother"
 
-# sambamba view -p -t=$(nproc) -l=9 \
-#     -S ${SAM_DIR}/${mother_name}_raw.sam \
-#     -f=bam -o=${SAM_DIR}/${mother_name}_raw.bam
+sambamba view -p -t=$(nproc) -l=9 \
+    -S ${SAM_DIR}/${mother_name}_raw.sam \
+    -f=bam -o=${SAM_DIR}/${mother_name}_raw.bam
 
-# sambamba markdup -r -p -t=$(nproc) -l=9 \
-#     ${SAM_DIR}/${mother_name}_raw.bam \
-#     ${SAM_DIR}/${mother_name}_dedup.bam
+sambamba markdup -r -p -t=$(nproc) -l=9 \
+    ${SAM_DIR}/${mother_name}_raw.bam \
+    ${SAM_DIR}/${mother_name}_dedup.bam
 
-# sambamba sort -m=${memory} -p -t=$(nproc) -l=9 \
-#     ${SAM_DIR}/${mother_name}_dedup.bam \
-#     -o=${INPUT_DIR}/${mother_name}.bam
+sambamba sort -m=${memory} -p -t=$(nproc) -l=9 \
+    ${SAM_DIR}/${mother_name}_dedup.bam \
+    -o=${INPUT_DIR}/${mother_name}.bam
 
-# echo "STEP 3c : Father"
+echo "STEP 3c : Father"
 
-# sambamba view -p -t=$(nproc) -l=9 \
-#     -S ${SAM_DIR}/${father_name}_raw.sam \
-#     -f=bam -o=${SAM_DIR}/${father_name}_raw.bam
+sambamba view -p -t=$(nproc) -l=9 \
+    -S ${SAM_DIR}/${father_name}_raw.sam \
+    -f=bam -o=${SAM_DIR}/${father_name}_raw.bam
 
-# sambamba markdup -r -p -t=$(nproc) -l=9 \
-#     ${SAM_DIR}/${father_name}_raw.bam \
-#     ${SAM_DIR}/${father_name}_dedup.bam
+sambamba markdup -r -p -t=$(nproc) -l=9 \
+    ${SAM_DIR}/${father_name}_raw.bam \
+    ${SAM_DIR}/${father_name}_dedup.bam
 
-# sambamba sort -m=${memory} -p -t=$(nproc) -l=9 \
-#     ${SAM_DIR}/${father_name}_dedup.bam \
-#     -o=${INPUT_DIR}/${father_name}.bam
+sambamba sort -m=${memory} -p -t=$(nproc) -l=9 \
+    ${SAM_DIR}/${father_name}_dedup.bam \
+    -o=${INPUT_DIR}/${father_name}.bam
 
-# ### Remove Intermediate SAM BAM file as it consumes too much spaces
+### Remove Intermediate SAM BAM file as it consumes too much spaces
 
-# #### Remove all in one folder 
-# rm ${SAM_DIR}/*.sam ${SAM_DIR}/*.bam
+#### Remove all in one folder 
+rm ${SAM_DIR}/*.sam ${SAM_DIR}/*.bam
 
-# #### Remove one by one
-# rm ${SAM_DIR}/${proband_name}_raw.sam ${SAM_DIR}/${mother_name}_raw.sam ${SAM_DIR}/${father_name}_raw.sam
-# rm ${SAM_DIR}/${proband_name}_raw.bam ${SAM_DIR}/${mother_name}_raw.bam ${SAM_DIR}/${father_name}_raw.bam
-# rm ${SAM_DIR}/${proband_name}_dedup.bam ${SAM_DIR}/${mother_name}_dedup.bam ${SAM_DIR}/${father_name}_dedup.bam
+#### Remove one by one
+rm ${SAM_DIR}/${proband_name}_raw.sam ${SAM_DIR}/${mother_name}_raw.sam ${SAM_DIR}/${father_name}_raw.sam
+rm ${SAM_DIR}/${proband_name}_raw.bam ${SAM_DIR}/${mother_name}_raw.bam ${SAM_DIR}/${father_name}_raw.bam
+rm ${SAM_DIR}/${proband_name}_dedup.bam ${SAM_DIR}/${mother_name}_dedup.bam ${SAM_DIR}/${father_name}_dedup.bam
 
-# # ----------------------------------------------
-# # STEP 4: Variant Calling
-# # ----------------------------------------------
-# echo "STEP 4a: Variant Calling Proband DeepVariant"
+# ----------------------------------------------
+# STEP 4: Variant Calling
+# ----------------------------------------------
+echo "STEP 4a: Variant Calling Proband DeepVariant"
 
-# docker run --gpus 1 \
-#     -v "${INPUT_DIR}":"/input"   \
-#     -v "${OUTPUT_DIR}":"/output"  \
-#     -v "${REFERENCE_DIR}":"/reference" \
-#     google/deepvariant:"${BIN_VERSION}-gpu" \
-#     /opt/deepvariant/bin/run_deepvariant \
-#     --model_type ${DEEPTRIO_MODEL} \
-#     --ref /reference/${REFSEQ_FASTA} \
-#     --reads /input/${proband_name}.bam \
-#     --num_shards $(nproc)  \
-#     --intermediate_results_dir /output/intermediate_results_dir_proband \
-#     --output_gvcf /output/${proband_name}_proband.g.vcf.gz \
-#     --output_vcf /output/${proband_name}_proband.vcf.gz
+docker run --gpus 1 \
+    -v "${INPUT_DIR}":"/input"   \
+    -v "${OUTPUT_DIR}":"/output"  \
+    -v "${REFERENCE_DIR}":"/reference" \
+    google/deepvariant:"${BIN_VERSION}-gpu" \
+    /opt/deepvariant/bin/run_deepvariant \
+    --model_type ${DEEPTRIO_MODEL} \
+    --ref /reference/${REFSEQ_FASTA} \
+    --reads /input/${proband_name}.bam \
+    --num_shards $(nproc)  \
+    --intermediate_results_dir /output/intermediate_results_dir_proband \
+    --output_gvcf /output/${proband_name}_proband.g.vcf.gz \
+    --output_vcf /output/${proband_name}_proband.vcf.gz
 
-# ## Remove Intermediate_results_dir to save spaces
-# rm -r -f ${OUTPUT_DIR}/intermediate_results_dir_proband
+## Remove Intermediate_results_dir to save spaces
+rm -r -f ${OUTPUT_DIR}/intermediate_results_dir_proband
 
-# ## Stop Docker to save spaces and memory
-# docker stop $(docker ps -aq)
-# docker rm $(docker ps -aq)
+## Stop Docker to save spaces and memory
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
 
-# echo "STEP 4b: Variant Calling DeepTrio"
+echo "STEP 4b: Variant Calling DeepTrio"
 
-# docker run --gpus 1 \
-#     -v "${INPUT_DIR}":"/input"   \
-#     -v "${OUTPUT_DIR}":"/output"  \
-#     -v "${REFERENCE_DIR}":"/reference" \
-#     google/deepvariant:deeptrio-"${BIN_VERSION}-gpu" \
-#     /opt/deepvariant/bin/deeptrio/run_deeptrio \
-#     --model_type ${DEEPTRIO_MODEL} \
-#     --ref /reference/${REFSEQ_FASTA} \
-#     --reads_child /input/${proband_name}.bam \
-#     --reads_parent1 /input/${father_name}.bam \
-#     --reads_parent2 /input/${mother_name}.bam \
-#     --output_vcf_child /output/${proband_name}.output.vcf.gz \
-#     --output_vcf_parent1 /output/${father_name}.output.vcf.gz \
-#     --output_vcf_parent2 /output/${mother_name}.output.vcf.gz \
-#     --sample_name_child 'child' \
-#     --sample_name_parent1 'father' \
-#     --sample_name_parent2 'mother' \
-#     --num_shards $(nproc)  \
-#     --intermediate_results_dir /output/intermediate_results_dir_trio \
-#     --output_gvcf_child /output/${proband_name}.g.vcf.gz \
-#     --output_gvcf_parent1 /output/${father_name}.g.vcf.gz \
-#     --output_gvcf_parent2 /output/${mother_name}.g.vcf.gz
+docker run --gpus 1 \
+    -v "${INPUT_DIR}":"/input"   \
+    -v "${OUTPUT_DIR}":"/output"  \
+    -v "${REFERENCE_DIR}":"/reference" \
+    google/deepvariant:deeptrio-"${BIN_VERSION}-gpu" \
+    /opt/deepvariant/bin/deeptrio/run_deeptrio \
+    --model_type ${DEEPTRIO_MODEL} \
+    --ref /reference/${REFSEQ_FASTA} \
+    --reads_child /input/${proband_name}.bam \
+    --reads_parent1 /input/${father_name}.bam \
+    --reads_parent2 /input/${mother_name}.bam \
+    --output_vcf_child /output/${proband_name}.output.vcf.gz \
+    --output_vcf_parent1 /output/${father_name}.output.vcf.gz \
+    --output_vcf_parent2 /output/${mother_name}.output.vcf.gz \
+    --sample_name_child 'child' \
+    --sample_name_parent1 'father' \
+    --sample_name_parent2 'mother' \
+    --num_shards $(nproc)  \
+    --intermediate_results_dir /output/intermediate_results_dir_trio \
+    --output_gvcf_child /output/${proband_name}.g.vcf.gz \
+    --output_gvcf_parent1 /output/${father_name}.g.vcf.gz \
+    --output_gvcf_parent2 /output/${mother_name}.g.vcf.gz
 
-# ## Remove Intermediate_results_dir to save spaces
-# rm -r -f ${OUTPUT_DIR}/intermediate_results_dir_trio
+## Remove Intermediate_results_dir to save spaces
+rm -r -f ${OUTPUT_DIR}/intermediate_results_dir_trio
 
-# ## Stop Docker to save spaces and memory
-# docker stop $(docker ps -aq)
-# docker rm $(docker ps -aq)
+## Stop Docker to save spaces and memory
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
 
-# # ----------------------------------------------
-# # STEP 5: Merge gVCF files with GLnexus
-# # ----------------------------------------------
-# echo "STEP 5: Merge gVCF files with GLnexus"
+# ----------------------------------------------
+# STEP 5: Merge gVCF files with GLnexus
+# ----------------------------------------------
+echo "STEP 5: Merge gVCF files with GLnexus"
 
-# docker run \
-#     -v "${OUTPUT_DIR}":"/output" \
-#     ghcr.io/dnanexus-rnd/glnexus:v${glnexus_version} \
-#     /usr/local/bin/glnexus_cli \
-#     --config DeepVariant_unfiltered \
-#     /output/${proband_name}.g.vcf.gz \
-#     /output/${father_name}.g.vcf.gz \
-#     /output/${mother_name}.g.vcf.gz \
-#     | bcftools view -Oz -o ${OUTPUT_DIR}/${proband_name}_trio_merged.vcf.gz 
+docker run \
+    -v "${OUTPUT_DIR}":"/output" \
+    ghcr.io/dnanexus-rnd/glnexus:v${glnexus_version} \
+    /usr/local/bin/glnexus_cli \
+    --config DeepVariant_unfiltered \
+    /output/${proband_name}.g.vcf.gz \
+    /output/${father_name}.g.vcf.gz \
+    /output/${mother_name}.g.vcf.gz \
+    | bcftools view -Oz -o ${OUTPUT_DIR}/${proband_name}_trio_merged.vcf.gz 
 
-# ## Stop Docker to save spaces and memory
-# docker stop $(docker ps -aq)
-# docker rm $(docker ps -aq)
+## Stop Docker to save spaces and memory
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
 
-# # ----------------------------------------------
-# # STEP 6: Calculate Mendelian Violation Rate using RTG Tools
-# # ----------------------------------------------
-# echo "STEP 6: Calculate Mendelian Violation Rate using RTG Tools"
-# #### Reference : https://www.animalgenome.org/bioinfo/resources/manuals/RTGOperationsManual.pdf
+# ----------------------------------------------
+# STEP 6: Calculate Mendelian Violation Rate using RTG Tools
+# ----------------------------------------------
+echo "STEP 6: Calculate Mendelian Violation Rate using RTG Tools"
+#### Reference : https://www.animalgenome.org/bioinfo/resources/manuals/RTGOperationsManual.pdf
 
-# if [ -d ${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf ];
-# then
-#     echo "${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf exists. Removing directory."
-#     rm -r -f ${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf
-# else
-# 	echo "${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf directory does not exist. Continue"
-# fi
+if [ -d ${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf ];
+then
+    echo "${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf exists. Removing directory."
+    rm -r -f ${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf
+else
+	echo "${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf directory does not exist. Continue"
+fi
 
-# docker run \
-#     -v "${INPUT_DIR}":"/input" \
-#     -v "${REFERENCE_DIR}":"/reference" \
-#     realtimegenomics/rtg-tools format \
-#     -o /reference/${REFSEQ_FASTA}.sdf "/reference/${REFSEQ_FASTA}"
+docker run \
+    -v "${INPUT_DIR}":"/input" \
+    -v "${REFERENCE_DIR}":"/reference" \
+    realtimegenomics/rtg-tools format \
+    -o /reference/${REFSEQ_FASTA}.sdf "/reference/${REFSEQ_FASTA}"
 
-# docker run \
-#     -v "${INPUT_DIR}":"/input" \
-#     -v "${REFERENCE_DIR}":"/reference" \
-#     -v "${OUTPUT_DIR}":"/output" \
-#     realtimegenomics/rtg-tools vcfstats \
-#     "/output/${proband_name}_trio_merged.vcf.gz" \
-#     | tee output/deepvariant.${proband_name}_trio.vcfstats.txt
+docker run \
+    -v "${INPUT_DIR}":"/input" \
+    -v "${REFERENCE_DIR}":"/reference" \
+    -v "${OUTPUT_DIR}":"/output" \
+    realtimegenomics/rtg-tools vcfstats \
+    "/output/${proband_name}_trio_merged.vcf.gz" \
+    | tee output/deepvariant.${proband_name}_trio.vcfstats.txt
 
-# docker run \
-#     -v "${INPUT_DIR}":"/input" \
-#     -v "${REFERENCE_DIR}":"/reference" \
-#     -v "${OUTPUT_DIR}":"/output" \
-#     realtimegenomics/rtg-tools mendelian \
-#     -i "/output/${proband_name}_trio_merged.vcf.gz" \
-#     -o "/output/${proband_name}_trio_annotated.output.vcf.gz" \
-#     --pedigree=/input/trio.ped \
-#     -t /reference/${REFSEQ_FASTA}.sdf \
-#     | tee output/deepvariant.${proband_name}_trio.mendelian.txt
+docker run \
+    -v "${INPUT_DIR}":"/input" \
+    -v "${REFERENCE_DIR}":"/reference" \
+    -v "${OUTPUT_DIR}":"/output" \
+    realtimegenomics/rtg-tools mendelian \
+    -i "/output/${proband_name}_trio_merged.vcf.gz" \
+    -o "/output/${proband_name}_trio_annotated.output.vcf.gz" \
+    --pedigree=/input/trio.ped \
+    -t /reference/${REFSEQ_FASTA}.sdf \
+    | tee output/deepvariant.${proband_name}_trio.mendelian.txt
 
-# # -------------------
-# # STEP 6b: Docker Stop and Kill All docker Container Process
-# # -------------------
-# docker stop $(docker ps -aq)
-# docker rm $(docker ps -aq)
+# -------------------
+# STEP 6b: Docker Stop and Kill All docker Container Process
+# -------------------
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
 
-# # ## Jump to direct to annotation session
+# ## Jump to direct to annotation session
 
-# # -------------------
-# # STEP 7: Annotate Variants - SnpEff SnpSift
-# # -------------------
-# echo "STEP 7a: Annotate Variants Proband - SNPEff with latest database, SnpSift ClinVar, SnpSift dbNSFP"
+# -------------------
+# STEP 7: Annotate Variants - SnpEff SnpSift
+# -------------------
+echo "STEP 7a: Annotate Variants Proband - SNPEff with latest database, SnpSift ClinVar, SnpSift dbNSFP"
 
-# # Create GATK > dbnsfp Chromosome
-# bcftools annotate \
-#   --rename-chrs ${chr_rename} \
-#   --threads nproc -Oz \
-#   -o ${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf \
-#   ${OUTPUT_DIR}/${proband_name}_proband.vcf.gz
+# Create GATK > dbnsfp Chromosome
+bcftools annotate \
+  --rename-chrs ${chr_rename} \
+  --threads nproc -Oz \
+  -o ${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf \
+  ${OUTPUT_DIR}/${proband_name}_proband.vcf.gz
 
-# # SnpEff with recent GRCh38.p14 database
-# SnpEff -v ${snpEff_ver} -dataDir ${snpEff_dir} \
-#     -s ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.html \
-#     ${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf \
-#     > ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf
+# SnpEff with recent GRCh38.p14 database
+SnpEff -v ${snpEff_ver} -dataDir ${snpEff_dir} \
+    -s ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.html \
+    ${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf \
+    > ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf
 
-# # SnpSift Annotate ClinVar
-# SnpSift annotate -v ${dbSNP} \
-#     ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf \
-#     > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf
+# SnpSift Annotate ClinVar
+SnpSift annotate -v ${dbSNP} \
+    ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf \
+    > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf
 
-# SnpSift annotate -v ${ClinVar} \
-#     ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf \
-#     > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf
+SnpSift annotate -v ${ClinVar} \
+    ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf \
+    > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf
 
-# # Annotate using dbNSFP for SNP Only (Indel Give 0 Annotation Result)
-# SnpSift dbnsfp -v -db ${dbnsfp} \
-#     ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf \
-#     > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf
+# Annotate using dbNSFP for SNP Only (Indel Give 0 Annotation Result)
+SnpSift dbnsfp -v -db ${dbnsfp} \
+    ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf \
+    > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf
 
-# # Final SnpEff for known vs unknown dbSNP
-# SnpEff -v ${snpEff_ver} -dataDir ${snpEff_dir} \
-#     -s ${ANNOTATED_DIR}/${proband_name}-2ndSnpEff-dbSNP-ClinVar-deepVariant.html \
-#     ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf \
-#     > ${ANNOTATED_DIR}/${proband_name}-2ndSnpEff-dbSNP-ClinVar-deepVariant.vcf
+# Final SnpEff for known vs unknown dbSNP
+SnpEff -v ${snpEff_ver} -dataDir ${snpEff_dir} \
+    -s ${ANNOTATED_DIR}/${proband_name}-2ndSnpEff-dbSNP-ClinVar-deepVariant.html \
+    ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf \
+    > ${ANNOTATED_DIR}/${proband_name}-2ndSnpEff-dbSNP-ClinVar-deepVariant.vcf
 
-# # Compress file size using bgzip
-# bgzip --threads nproc ${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf
-# bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf
-# bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf
-# bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf
-# bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf
+# Compress file size using bgzip
+bgzip --threads nproc ${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf
+bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf
+bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf
+bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf
+bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf
 
 
-# echo "STEP 7b: Annotate Variants Trio - SNP Sift"
+echo "STEP 7b: Annotate Variants Trio - SNP Sift"
 
-# # Create GATK > dbnsfp Chromosome
-# bcftools annotate \
-#   --rename-chrs ${chr_rename} \
-#   --threads nproc -Oz \
-#   -o ${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf \
-#   ${OUTPUT_DIR}/${proband_name}_trio_annotated.output.vcf.gz
+# Create GATK > dbnsfp Chromosome
+bcftools annotate \
+  --rename-chrs ${chr_rename} \
+  --threads nproc -Oz \
+  -o ${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf \
+  ${OUTPUT_DIR}/${proband_name}_trio_annotated.output.vcf.gz
 
-# # SnpEff with recent GRCh38.p14 database
-# SnpEff -v ${snpEff_ver} -dataDir ${snpEff_dir} \
-#     -s ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.html \
-#     ${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf \
-#     > ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf
+# SnpEff with recent GRCh38.p14 database
+SnpEff -v ${snpEff_ver} -dataDir ${snpEff_dir} \
+    -s ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.html \
+    ${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf \
+    > ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf
 
-# # SnpSift Annotate dbSNP & ClinVar
-# SnpSift annotate -v ${dbSNP} \
-#     ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf \
-#     > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf
+# SnpSift Annotate dbSNP & ClinVar
+SnpSift annotate -v ${dbSNP} \
+    ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf \
+    > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf
 
-# SnpSift annotate -v ${ClinVar} \
-#     ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf \
-#     > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf
+SnpSift annotate -v ${ClinVar} \
+    ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf \
+    > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf
 
-# # Annotate using dbNSFP for SNP Only (Indel Give 0 Annotation Result)
-# SnpSift dbnsfp -v -db ${dbnsfp} \
-#     ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf \
-#     > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf
+# Annotate using dbNSFP for SNP Only (Indel Give 0 Annotation Result)
+SnpSift dbnsfp -v -db ${dbnsfp} \
+    ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf \
+    > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf
 
-# # Final SnpEff for known vs unknown dbSNP
-# SnpEff -v ${snpEff_ver} -dataDir ${snpEff_dir} \
-#     -s ${ANNOTATED_DIR}/${proband_name}-2ndSnpEff-dbSNP-ClinVar-deepTrio.html \
-#     ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf \
-#     > ${ANNOTATED_DIR}/${proband_name}-2ndSnpEff-dbSNP-ClinVar-deepTrio.vcf
+# Final SnpEff for known vs unknown dbSNP
+SnpEff -v ${snpEff_ver} -dataDir ${snpEff_dir} \
+    -s ${ANNOTATED_DIR}/${proband_name}-2ndSnpEff-dbSNP-ClinVar-deepTrio.html \
+    ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf \
+    > ${ANNOTATED_DIR}/${proband_name}-2ndSnpEff-dbSNP-ClinVar-deepTrio.vcf
 
-# # Compress file size using bgzip
-# bgzip --threads nproc ${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf
-# bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf
-# bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf
-# bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf
-# bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf
+# Compress file size using bgzip
+bgzip --threads nproc ${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf
+bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf
+bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf
+bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf
+bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf
 
 
 # echo "STEP 8: SV calling - Tiddit"
