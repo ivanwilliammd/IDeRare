@@ -48,14 +48,12 @@ python iderare_phentl.py
 ```txt
 SNOMEDCT:65959000 // Differential Diagnosis 1 : Beta thalassemia (disorder)
 SNOMEDCT:11179002 // Differential Diagnosis 2 : Glycogen storage disease, type IV (disorder)
+ICD-10:E75.2 // Differential Diagnosis 3 : Gaucher Disease
 SNOMEDCT:258211005 // Inheritance pattern : Autosomal recessive inheritance (qualifier value)
-SNOMEDCT:165397008 // Laboratory finding : Hemoglobin low (finding)
 SNOMEDCT:80515008 // Physical examination finding : Hepatomegaly
-OMIM:230800 // Gaucher Disease
-ORPHA:848 // Glycogen storage disease, type IV
-HP:0001396 // Cholestasis
-HP:0002240 //  Hepatomegaly
-LOINC:2862-1|L // Hypoalbuminemia
+SNOMEDCT:389026000 // Physical examination finding : Ascites
+LOINC:2862-1|L // Lab Result : Hypoalbuminemia
+LOINC:718-7|L // Lab Result : Low Hemoglobin Concentration
 ```
 1. Set the data, directory file reference and trio information on ```iderare.yml```.<br><br> 
 **Note** : all exome files should be located in the ```input/A_FASTQ``` folder of absolute path setup by ```data_dir``` at ```iderare.yml```
