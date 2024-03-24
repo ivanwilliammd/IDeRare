@@ -51,10 +51,11 @@ SNOMEDCT:65959000 // Differential Diagnosis 2 : Beta thalassemia (disorder)
 SNOMEDCT:258211005 // Inheritance pattern : Autosomal recessive inheritance (qualifier value)
 SNOMEDCT:165397008 // Laboratory finding : Hemoglobin low (finding)
 SNOMEDCT:80515008 // Physical examination finding : Hepatomegaly
-ORPHA:442835
-HP:0040283
-SNOMEDCT:11179002
-ORPHA:848
+OMIM:230800 // Gaucher Disease
+ORPHA:848 // Glycogen storage disease, type IV
+HP:0001396 // Cholestasis
+HP:0002240 //  Hepatomegaly
+LOINC:2862-1|L // Hypoalbuminemia
 ```
 6. Set the data, directory file reference and trio information on ```iderare.yml```.<br><br> 
 **Note** : all exome files should be located in the ```input/A_FASTQ``` folder of absolute path setup by ```data_dir``` at ```iderare.yml```

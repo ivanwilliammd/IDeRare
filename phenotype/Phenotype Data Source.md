@@ -4,6 +4,8 @@
 1. HPO to SNOMED map : ```hp.obo``` from [HPO Ontology download](https://hpo.jax.org/app/data/ontology)
 2. ORPHANET to HPO map : ```genes_to_phenotype.txt``` from [HPO annotation download](https://hpo.jax.org/app/data/annotations)
 3. SNOMED CT to ORPHA map : See further instruction below
+4. ORPHA to OMIM map : ```ORDO_en_4.4.owl``` from [ORPHANET download](https://www.orphadata.com/ordo/)
+5. LOINC to HPO map : ```loinc2hpo-annotations.tsv``` from [LOINC 2 HPO annotation](https://github.com/TheJacksonLaboratory/loinc2hpoAnnotation.git)
 
 
 ### Build HPO to SNOMED map & ORPHANET to HPO Map Subset
