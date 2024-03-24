@@ -48,7 +48,7 @@ python iderare_phentl.py
 ```txt
 SNOMEDCT:65959000 // Differential Diagnosis 1 : Beta thalassemia (disorder)
 SNOMEDCT:11179002 // Differential Diagnosis 2 : Glycogen storage disease, type IV (disorder)
-ICD-10:E75.2 // Differential Diagnosis 3 : Gaucher Disease
+ICD-10:E75.2 // Differential Diagnosis 3 : Gaucher Disease / Other Sphingolipidosis
 SNOMEDCT:258211005 // Inheritance pattern : Autosomal recessive inheritance (qualifier value)
 SNOMEDCT:80515008 // Physical examination finding : Hepatomegaly
 SNOMEDCT:389026000 // Physical examination finding : Ascites
