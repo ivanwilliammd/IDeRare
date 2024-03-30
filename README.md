@@ -54,6 +54,7 @@ cd ../
     - Example of the clinical data provided at [Clinical Information Example section](#clinical-information-example)
 2. Run ```iderare_pheno.sh``` (Interactive jupyter notebook available [here](backbone/iderare_pheno.ipynb))<br>
 ```bash
+# Advance usage of the script : available at iderare_pheno.sh file
 source iderare_pheno.sh
 ```
 3. The output of this file will be saved on [output folder](output), with the file tree and explanation as following.
@@ -91,7 +92,7 @@ source iderare_pheno.sh
 ![Example File](picture/02.png)
 1. Run the bash script
 ```bash
-source iderare.sh
+source iderare.sh 
 ```
 
 
