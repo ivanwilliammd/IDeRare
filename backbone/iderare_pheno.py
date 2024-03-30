@@ -9,6 +9,7 @@ from datetime import datetime
 
 import pandas as pd
 import numpy as np
+import yaml
 from pyhpo import Ontology, HPOSet, Omim, stats
 import scipy.cluster
 from matplotlib import pyplot as plt
@@ -460,6 +461,15 @@ if __name__ == "__main__":
     result_to_tsv(rd_sr_dis_id, rd_sr_dis_name, rd_s_sim, filename='{}_recommended_disease_similarity'.format(datetime.now().strftime("%Y%m%d_%H%M%S")))
 
     # %%
+    ## Add to iderare.yml file
+    if(add_yml):
+        print('Adding HPO codes to iderare.yml file.')
+        with open("templates/template_iderare.yml", "r") as i:
+            y = yaml.safe_load(i)
+            y['analysis']['hpo_ids'] = hpo_sets
 
+        with open(os.path.join("iderare.yml"), "w+") as o:
+            yaml.dump(y, o, default_flow_style=False, sort_keys=False)
+            print('Created iderare.yml file with HPO codes.')
 
 
