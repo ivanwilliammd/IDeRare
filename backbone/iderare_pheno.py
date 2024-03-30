@@ -15,6 +15,12 @@ from matplotlib import pyplot as plt
 
 Ontology(os.path.join(os.getcwd(), 'phenotype', 'rawdl_20240310'))
 
+import argparse
+
+def iderare_pheno(threshold=0.4, differential=10, recommendation=20, add_yml=False):
+    # Your function logic here
+    return threshold, differential, recommendation, add_yml
+
 # %%
 # Declare the folder path for phenotype data source
 phenotype_folder = os.path.join(os.getcwd(), 'phenotype', 'subset')
@@ -386,64 +392,74 @@ def omim_recommendation(hpo_set, type='gene', threshold=0.3, recommendation=50):
     # Check similarity between phenotype (HPO) and differential diagnosis (OMIM)
     return threshold_similarity(omim_set, hpo_sets, threshold, recommendation, linkage='threshold')
 
-# %%
-# Split phenotype diagnosis split
-hpo_sets, diagnosis_sets = phenotype_diagnosis_split(clinical_data_list)
-s_sim, [lnk_all, sr_dis_name, sr_dis_id], [lnk_thr, sr_dis_name_thr, sr_dis_id_thr] = omim_hpo_similarity(diagnosis_sets, hpo_sets, threshold=threshold, differential=diffx)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser("iderare_pheno.py")
+    parser.add_argument("-t", "--threshold", help="Threshold used for dendogram and filtering out the minimum similarity score as criteria subsetting differential diagnoses set", type=float, default=0.0)
+    parser.add_argument("-d", "--differential", help="Threshold used for the maximum number of differential diagnoses subset allowed", type=int, default=0)
+    parser.add_argument("-r", "--recommendation", help="Threshold used for the maximum number of recommendation subset allowed for each gene-disease recommendation", type=int, default=0)
+    parser.add_argument("-y", "--add-yml", help="Command to directly add the final HPOset to iderare.yml file", action="store_true")
 
-# Plot all similarity in dendogram threshold
-lnk_all_dendo = linkage_dendogram(lnk_all, sr_dis_name, title='Linkage of DDx', threshold=threshold)
-lnk_thr_dendo = linkage_dendogram(lnk_thr, sr_dis_name_thr, title='Linkage of DDx with threshold gt ' + str(threshold) + ' or ' + str(diffx) + '-top diagnoses linkage', threshold=threshold)
+    args = parser.parse_args()
 
-# Print the result with similarity > threshold
-for i in range(len(sr_dis_name_thr)):
-    print('Rank', str(i+1), ':', sr_dis_name_thr[i], 'Sim:', s_sim[i])
+    threshold, differential, recommendation, add_yml = iderare_pheno(args.threshold, args.differential, args.recommendation, args.add_yml)
+    # %%
+    # Split phenotype diagnosis split
+    hpo_sets, diagnosis_sets = phenotype_diagnosis_split(clinical_data_list)
+    s_sim, [lnk_all, sr_dis_name, sr_dis_id], [lnk_thr, sr_dis_name_thr, sr_dis_id_thr] = omim_hpo_similarity(diagnosis_sets, hpo_sets, threshold=threshold, differential=diffx)
 
-# %%
-# Give recommendation of causative gene
-rg_s_sim,[ rg_lnk_all, rg_sr_dis_name, rg_sr_dis_id], [rg_lnk_thr, rg_sr_dis_name_thr, rg_sr_dis_thr] = omim_recommendation(hpo_sets, type='gene', threshold=threshold, recommendation=recx)
-lnk_thr_reg_dendo = linkage_dendogram(rg_lnk_thr, rg_sr_dis_name_thr, title='Linkage of Causative Gene with threshold gt ' + str(threshold) + ' or ' + str(recx) + '-top gene linkage', threshold=threshold)
+    # Plot all similarity in dendogram threshold
+    lnk_all_dendo = linkage_dendogram(lnk_all, sr_dis_name, title='Linkage of DDx', threshold=threshold)
+    lnk_thr_dendo = linkage_dendogram(lnk_thr, sr_dis_name_thr, title='Linkage of DDx with threshold gt ' + str(threshold) + ' or ' + str(diffx) + '-top diagnoses linkage', threshold=threshold)
 
-# Print the result with similarity > threshold
-print('Recommendation of high potential gene : ')
-for i in range(len(rg_sr_dis_name_thr)):
-    print('Rank', str(i+1), ':', rg_sr_dis_name_thr[i], 'Sim:', rg_s_sim[i])
+    # Print the result with similarity > threshold
+    for i in range(len(sr_dis_name_thr)):
+        print('Rank', str(i+1), ':', sr_dis_name_thr[i], 'Sim:', s_sim[i])
 
-# %%
-# Give recommendation of causative disease
-rd_s_sim, [rd_lnk_all, rd_sr_dis_name, rd_sr_dis_id], [rd_lnk_thr, rd_sr_dis_name_thr, rd_sr_dis_id_thr] = omim_recommendation(hpo_sets, type='disease', threshold=threshold, recommendation=recx)
-lnk_thr_rd_dendo = linkage_dendogram(rd_lnk_thr, rd_sr_dis_name_thr, title='Linkage of Causative Disease with threshold gt ' + str(threshold) + ' or ' + str(recx) + '-top disease linkage', threshold=threshold)
+    # %%
+    # Give recommendation of causative gene
+    rg_s_sim,[ rg_lnk_all, rg_sr_dis_name, rg_sr_dis_id], [rg_lnk_thr, rg_sr_dis_name_thr, rg_sr_dis_thr] = omim_recommendation(hpo_sets, type='gene', threshold=threshold, recommendation=recx)
+    lnk_thr_reg_dendo = linkage_dendogram(rg_lnk_thr, rg_sr_dis_name_thr, title='Linkage of Causative Gene with threshold gt ' + str(threshold) + ' or ' + str(recx) + '-top gene linkage', threshold=threshold)
 
-# Print the result with similarity > threshold
-print('Recommendation of high potential diagnoses : ')
-for i in range(len(rd_sr_dis_name_thr)):
-    print('Rank', str(i+1), ':', rd_sr_dis_name_thr[i], 'Sim:', rd_s_sim[i])
+    # Print the result with similarity > threshold
+    print('Recommendation of high potential gene : ')
+    for i in range(len(rg_sr_dis_name_thr)):
+        print('Rank', str(i+1), ':', rg_sr_dis_name_thr[i], 'Sim:', rg_s_sim[i])
 
-# %%
-# Summary :
-## Output of transformed_clinical_data.txt in List format, non enter separated
-print('---------')
-print('Finalizing the output')
-print('---------')
+    # %%
+    # Give recommendation of causative disease
+    rd_s_sim, [rd_lnk_all, rd_sr_dis_name, rd_sr_dis_id], [rd_lnk_thr, rd_sr_dis_name_thr, rd_sr_dis_id_thr] = omim_recommendation(hpo_sets, type='disease', threshold=threshold, recommendation=recx)
+    lnk_thr_rd_dendo = linkage_dendogram(rd_lnk_thr, rd_sr_dis_name_thr, title='Linkage of Causative Disease with threshold gt ' + str(threshold) + ' or ' + str(recx) + '-top disease linkage', threshold=threshold)
 
-# Save the output to text file
-print('There are total of {} HPO codes and {} OMIM codes parsed from the clinical data.'.format(len(hpo_sets), len(diagnosis_sets)))
-print('Save the HPO sets to list file.')
-with open('output/{}_transformed_hpo_set.txt'.format(datetime.now().strftime("%Y%m%d_%H%M%S")), 'w') as file:
-    file.write(str(hpo_sets))
+    # Print the result with similarity > threshold
+    print('Recommendation of high potential diagnoses : ')
+    for i in range(len(rd_sr_dis_name_thr)):
+        print('Rank', str(i+1), ':', rd_sr_dis_name_thr[i], 'Sim:', rd_s_sim[i])
 
-print('Save the HPO sets as tsv file.')
-result_to_tsv(hpo_sets, [Ontology.hpo(int(d.strip('HP:'))).name for d in hpo_sets], filename='{}_transformed_hpo_set'.format(datetime.now().strftime("%Y%m%d_%H%M%S")))
+    # %%
+    # Summary :
+    ## Output of transformed_clinical_data.txt in List format, non enter separated
+    print('---------')
+    print('Finalizing the output')
+    print('---------')
 
-print('Saving differential diagnosis sets similarity result into tsv file.')
-result_to_tsv(sr_dis_id, sr_dis_name, s_sim, filename='{}_differential_diagnosis_similarity'.format(datetime.now().strftime("%Y%m%d_%H%M%S")))
+    # Save the output to text file
+    print('There are total of {} HPO codes and {} OMIM codes parsed from the clinical data.'.format(len(hpo_sets), len(diagnosis_sets)))
+    print('Save the HPO sets to list file.')
+    with open('output/{}_transformed_hpo_set.txt'.format(datetime.now().strftime("%Y%m%d_%H%M%S")), 'w') as file:
+        file.write(str(hpo_sets))
 
-print('There are total of {} recommended genes and {} recommended diagnoses.'.format(len(rg_sr_dis_name_thr), len(rd_sr_dis_name_thr)))
-print('Saving gene and disease recommendation similarity result into tsv file.')
-result_to_tsv(rg_sr_dis_id, rg_sr_dis_name, rg_s_sim, filename='{}_recommended_gene_similarity'.format(datetime.now().strftime("%Y%m%d_%H%M%S")))
-result_to_tsv(rd_sr_dis_id, rd_sr_dis_name, rd_s_sim, filename='{}_recommended_disease_similarity'.format(datetime.now().strftime("%Y%m%d_%H%M%S")))
+    print('Save the HPO sets as tsv file.')
+    result_to_tsv(hpo_sets, [Ontology.hpo(int(d.strip('HP:'))).name for d in hpo_sets], filename='{}_transformed_hpo_set'.format(datetime.now().strftime("%Y%m%d_%H%M%S")))
 
-# %%
+    print('Saving differential diagnosis sets similarity result into tsv file.')
+    result_to_tsv(sr_dis_id, sr_dis_name, s_sim, filename='{}_differential_diagnosis_similarity'.format(datetime.now().strftime("%Y%m%d_%H%M%S")))
+
+    print('There are total of {} recommended genes and {} recommended diagnoses.'.format(len(rg_sr_dis_name_thr), len(rd_sr_dis_name_thr)))
+    print('Saving gene and disease recommendation similarity result into tsv file.')
+    result_to_tsv(rg_sr_dis_id, rg_sr_dis_name, rg_s_sim, filename='{}_recommended_gene_similarity'.format(datetime.now().strftime("%Y%m%d_%H%M%S")))
+    result_to_tsv(rd_sr_dis_id, rd_sr_dis_name, rd_s_sim, filename='{}_recommended_disease_similarity'.format(datetime.now().strftime("%Y%m%d_%H%M%S")))
+
+    # %%
 
 
 
