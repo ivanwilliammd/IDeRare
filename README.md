@@ -44,7 +44,8 @@ cd ../
 ```
 
 ### Phenotype Translation and Phenotype Similarity Scoring (iderare_pheno.py) - Optional
-1. If you have SNOMED-CT, LOINC, ORPHANET, HPO, or OMIM code and would like to translate it to respective phenotype code (HPO) or check the similarity of its code, you could input the data to  ```clinical_data.txt``` file and run ```iderare_phen.py``` <br>Step by step implementation could be checked on Jupyter Notebook provided at ```iderare_phen.ipynb``` <br>
+1. If you have SNOMED-CT, LOINC, ORPHANET, HPO, or OMIM code and would like to translate it to respective phenotype code (HPO) or check the similarity of its code, you could input the data to  ```clinical_data.txt``` file 
+2. Run ```iderare_phen.py``` (Interactive jupyter notebook available)
 ```bash
 conda activate iderare
 python iderare_pheno.py
