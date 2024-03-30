@@ -51,8 +51,8 @@ python iderare_pheno.py
 ```
 
 <a id="clinical-data-example"></a>
-#### Clinical Data example
-| Clinical Finding | Source of Information | Code Type | EMR Code | Interpretation |
+#### Coded clinical Data example related to exome data provided at Bioproject database [1077459](https://www.ncbi.nlm.nih.gov/bioproject/1077459)
+| Clinical Finding | Source of Information | Coded in | EMR Code | Interpretation |
 |----------------------|------|------|----------|----------|
 | Autosomal recessive inheritance | Inheritance Pattern | SNOMED-CT  | SNOMEDCT:258211005 |
 | Hepatosplenomegaly | Physical Examination | SNOMED-CT | SNOMEDCT:36760000 |
@@ -77,12 +77,13 @@ python iderare_pheno.py
 | Bone-marrow foam cells | Pathology Anatomy Bone Marrow Aspiration | HPO | HP:0004333 |
 | Failure to thrive during infancy | Developmental history | HPO | HP:0001531 |
 
+#### Working diagnosis before Exome Sequencing
 | Differential Diagnosis | Code Type | EMR Code |
 |----------------------|------|----------|
 | Beta thalassemia | SNOMED-CT | SNOMEDCT:65959000 |
-| Glycogen storage disease, type IV | SNOMED-CT | SNOMEDCT:11179002 |
 | Gaucher Disease | SNOMED-CT | SNOMEDCT:190794006 |
-| Other Sphingolipidosis | SNOMED-CT | ICD-10:E75.2 |
+| Niemann Pick Disease type C | SNOMED-CT | SNOMEDCT:66751000 |
+| Glycogen storage diseases spectrum | SNOMED-CT | ICD-10:E74.0 |
 
 ### Preparing the iderare.yml for phenotype-genotype analysis pipeline
 1. Set the data, directory file reference and trio information on ```iderare.yml```.<br><br> 
