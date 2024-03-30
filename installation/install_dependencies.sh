@@ -176,10 +176,10 @@ echo "Aliases added to ~/.bashrc"
 
 # Install Python Dependencies Required
 echo "Removing old iderare environment"
-conda remove --name iderare --all
-conda create --name iderare python=3.8
+conda remove --name iderare --all -y
+conda create --name iderare python=3.8 -y
 conda activate iderare
-conda install pandas pyyaml numpy
-pip install hpo3
 echo "Install Python Dependencies"
-conda activate iderare
+conda install pandas pyyaml numpy scipy matplotlib -y
+pip install hpo3 --upgrade
+conda deactivate iderare
