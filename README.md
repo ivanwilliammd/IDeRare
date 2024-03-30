@@ -25,8 +25,7 @@ Ivan William Harsono<sup>a</sup>, Yulia Ariani<sup>b</sup>, Beben Benyamin<sup>c
 - The .yaml file path are assuming all the folder are stored in ```Downloads``` folder with subfolder of ```Database``` (for RefSeq, dbNSFP, dbSNP, ClinVar), ```Sandbox``` (for application and its database), ```IDeRare``` (git cloned folder)
 
 ### Data Example
-- Phenotype data with mixture of SNOMEDCT, HPO, OMIM, ICD10, LOINC must be provided at [clinical_data.txt](clinical_data.txt).
-- Explanation how to write the entry available at [Clinical Data Example section](#clinical-data-example) and file example at [clinical_data.txt](example/clinical_data_example.txt)
+- Explanation how to write the entry available at [Clinical Information Example section](#clinical-information-example) and file example at example/[clinical_data_example.txt](example/clinical_data_example.txt)
 - Genotype data accessible from the SRR of Bioproject database [1077459](https://www.ncbi.nlm.nih.gov/bioproject/1077459) and SRA database: with accession number [SRR27997290-SRR27997292](https://www.ncbi.nlm.nih.gov/sra?linkname=bioproject_sra_all&from_uid=1077459). **Data paper submission of this samples without Author's permission is strictly prohibited.**
 
 ### Quick Installation
@@ -44,9 +43,16 @@ source download_database.sh
 cd ../
 ```
 
-### Phenotype Translation and Phenotype Similarity Scoring (iderare_pheno.py) - Optional
-1. If you have SNOMED-CT, LOINC, ORPHANET, HPO, or OMIM code and would like to translate it to respective phenotype code (HPO) or check the similarity of its code, you could input the data to  ```clinical_data.txt``` file 
-2. Run ```iderare_pheno.sh``` (Interactive jupyter notebook available)<br>
+### OPTIONAL - Phenotype Translation, Linkage Analysis, Phenotype Similarity Scoring, Gene-disease recommendation (iderare_pheno.py)
+1. This script is recommended if you would like to do conversion, linkage analysis, similarity scoring, and gene-disease recommendation based on the phenotype data provided at [clinical_data.txt](clinical_data.txt). Full feature : 
+    - Convert the phenotype data to HPO code (accept mixed SNOMED, LOINC, and HPO code)
+    - Linkage analysis of differential diagnosis (accept mixed SNOMED, ICD10, ORPHA, OMIM code)
+    - Similarity scoring of differential diagnosis
+    - Gene-disease recommendation based on the phenotype data.
+    - Similarity scoring of recommended causative gene and disease.
+    - Linkage analysis of recommended causative gene and disease based on phenotype data.
+    - Example of the clinical data provided at [Clinical Information Example section](#clinical-information-example)
+2. Run ```iderare_pheno.sh``` (Interactive jupyter notebook available [here](backbone/iderare_pheno.ipynb))<br>
 ```bash
 source iderare_pheno.sh
 ```
@@ -77,8 +83,25 @@ source iderare_pheno.sh
 | {datetime}_transformed_hpo_set.tsv | Converted clinical_data to readily used HPO code |
 | {datetime}_transformed_hpo_set.tsv | Converted clinical_data to readily used HPO list for yml |
 
-<a id="clinical-data-example"></a>
-#### Coded clinical Data example related to exome data provided at Bioproject database [1077459](https://www.ncbi.nlm.nih.gov/bioproject/1077459)
+### Preparing the iderare.yml for phenotype-based-prioritization exome analysis pipeline
+1. Set the data, directory file reference and trio information on ```iderare.yml```.<br><br> 
+**Note** : all exome files should be located in the ```input/A_FASTQ``` folder of absolute path setup by ```data_dir``` at ```iderare.yml```. Example of filled yml available on [iderare_example.yml](example/iderare_example.yml)
+<br><br>
+![File Structure](picture/01.png)
+![Example File](picture/02.png)
+1. Run the bash script
+```bash
+source iderare.sh
+```
+
+
+## Appendix
+<h3 id="clinical-information-example">Clinical Information Example</h3>
+
+- Coded clinical information example in txt format provided at example/[clinical_data_example.txt](example/clinical_data_example.txt). 
+- This clinical information is the patient phenotype and differential diagnoses complementing trio exome data provided at Bioproject database [1077459](https://www.ncbi.nlm.nih.gov/bioproject/1077459)
+
+#### Phenotype Data
 | Clinical Finding | Source of Information | Coded in | EMR Code | Interpretation | Writing format at ```clinical_data.txt``` |
 |----------------------|------|------|----------|----------|----------|
 | Autosomal recessive inheritance | Inheritance Pattern | SNOMED-CT  | 258211005 | |SNOMEDCT:258211005 |
@@ -111,14 +134,3 @@ source iderare_pheno.sh
 | Gaucher Disease | SNOMED-CT | 190794006 |SNOMEDCT:190794006 |
 | Niemann Pick Disease type C | SNOMED-CT | 66751000 |SNOMEDCT:66751000 |
 | Glycogen storage diseases spectrum | ICD10 | E74.0 | ICD-10:E74.0 |
-
-### Preparing the iderare.yml for phenotype-based-prioritization exome analysis pipeline
-1. Set the data, directory file reference and trio information on ```iderare.yml```.<br><br> 
-**Note** : all exome files should be located in the ```input/A_FASTQ``` folder of absolute path setup by ```data_dir``` at ```iderare.yml```. Example of filled yml available on [iderare_example.yml](example/iderare_example.yml)
-<br><br>
-![File Structure](picture/01.png)
-![Example File](picture/02.png)
-1. Run the bash script
-```bash
-source iderare.sh
-```
