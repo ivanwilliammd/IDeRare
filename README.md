@@ -17,17 +17,18 @@ Ivan William Harsono<sup>a</sup>, Yulia Ariani<sup>b</sup>, Beben Benyamin<sup>c
 
 **Note:** Currently IDeRare paper is being considered journal submission. The citation will be updated once the paper is published.
 
-## Description
+### Description
 - This pipeline is designed to be used in Linux environment
 - Original paper may used different version of tools, and the prerequisite used in this pipeline is the latest version of the tools
 - This pipeline is designed and tested with Indonesia rare disease trio patient, but it should be also usable for general cases of rare disease variant discovery from Exome Sequences data given paired end .fq.gz file and HPO data(s)
 - Ensure you have at least 250GB free for database and application setup, and 100GB free for each Trio family exome set
 - The .yaml file path are assuming all the folder are stored in ```Downloads``` folder with subfolder of ```Database``` (for RefSeq, dbNSFP, dbSNP, ClinVar), ```Sandbox``` (for application and its database), ```IDeRare``` (git cloned folder)
 
-## Data Example
-- Phenotype data provided by the following part at ```clinical_data.txt``` file
+### Data Example
+- Phenotype data provided by the following part at ```clinical_data.txt``` file with explanation of the data at [Clinical Data Example](#clinical-data-example)
+- Genotype data accessible from the SRR of Bioproject database [1077459](https://www.ncbi.nlm.nih.gov/bioproject/1077459) and SRA database: with accession number [SRR27997290-SRR27997292](https://www.ncbi.nlm.nih.gov/sra?linkname=bioproject_sra_all&from_uid=1077459). **Data paper submission of this samples without Author's permission is strictly prohibited.**
 
-## Quick Install
+### Quick Installation
 1. Clone this repository
 ```bash
 git clone https://github.com/ivanwilliammd/IDeRare
@@ -42,7 +43,7 @@ source download_database.sh
 cd ../
 ```
 
-## Phenotype Translation and Phenotype Similarity Scoring (iderare_pheno.py) - Optional
+### Phenotype Translation and Phenotype Similarity Scoring (iderare_pheno.py) - Optional
 1. If you have SNOMED-CT, LOINC, ORPHANET, HPO, or OMIM code and would like to translate it to respective phenotype code (HPO) or check the similarity of its code, you could input the data to  ```clinical_data.txt``` file and run ```iderare_phen.py``` <br>Step by step implementation could be checked on Jupyter Notebook provided at ```iderare_phen.ipynb``` <br>
 ```bash
 conda activate iderare
@@ -69,11 +70,12 @@ python iderare_pheno.py
 | Low HDL Level | Clinical Pathology (Lab) | LOINC | LOINC:2085-9 | L |
 | Low Platelet Count | Clinical Pathology (Lab) | LOINC | LOINC:777-3 | L |
 | Increased Lactate Level | Clinical Pathology (Lab) | LOINC | LOINC:2542-7 | H |
-| Increase Hepatic Glycogen Content | Liver Biopsy Pathology Anatomy | HPO | HP:0006568 |
+| Increased ALT Level | Clinical Pathology (Lab) | LOINC | LOINC:1742-6 | H |
+| Increased AST Level | Clinical Pathology (Lab) | LOINC | LOINC:1920-8 | H |
+| Abnormal lower motor neuron | Disease Spectrum related to EMG result | HPO | HP:0002366 |
+| Increase Hepatic Glycogen Content | Liver Biopsy Pathology Interpretation | HPO | HP:0006568 |
 | Bone-marrow foam cells | Pathology Anatomy Bone Marrow Aspiration | HPO | HP:0004333 |
 | Failure to thrive during infancy | Developmental history | HPO | HP:0001531 |
-Abnormal lower motor neuron morphology
-Elevated hepatic transaminases
 
 | Differential Diagnosis | Code Type | EMR Code |
 |----------------------|------|----------|
@@ -82,7 +84,7 @@ Elevated hepatic transaminases
 | Gaucher Disease | SNOMED-CT | SNOMEDCT:190794006 |
 | Other Sphingolipidosis | SNOMED-CT | ICD-10:E75.2 |
 
-
+### Preparing the iderare.yml for phenotype-genotype analysis pipeline
 1. Set the data, directory file reference and trio information on ```iderare.yml```.<br><br> 
 **Note** : all exome files should be located in the ```input/A_FASTQ``` folder of absolute path setup by ```data_dir``` at ```iderare.yml```
 <br><br>
