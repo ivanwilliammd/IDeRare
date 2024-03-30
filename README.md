@@ -25,7 +25,7 @@ Ivan William Harsono<sup>a</sup>, Yulia Ariani<sup>b</sup>, Beben Benyamin<sup>c
 - The .yaml file path are assuming all the folder are stored in ```Downloads``` folder with subfolder of ```Database``` (for RefSeq, dbNSFP, dbSNP, ClinVar), ```Sandbox``` (for application and its database), ```IDeRare``` (git cloned folder)
 
 ### Data Example
-- Explanation how to write the entry available at [Clinical Information Example section](#clinical-information-example) and file example at example/[clinical_data_example.txt](example/clinical_data_example.txt)
+- Explanation how to write the entry available at [Clinical Information Example section](#clinical-information-example) and file example at [example/clinical_data_example.txt](example/clinical_data_example.txt)
 - Genotype data accessible from the SRR of Bioproject database [1077459](https://www.ncbi.nlm.nih.gov/bioproject/1077459) and SRA database: with accession number [SRR27997290-SRR27997292](https://www.ncbi.nlm.nih.gov/sra?linkname=bioproject_sra_all&from_uid=1077459). **Data paper submission of this samples without Author's permission is strictly prohibited.**
 
 ### Quick Installation
@@ -85,7 +85,7 @@ source iderare_pheno.sh
 
 ### Preparing the iderare.yml for phenotype-based-prioritization exome analysis pipeline
 1. Set the data, directory file reference and trio information on ```iderare.yml```.<br><br> 
-**Note** : all exome files should be located in the ```input/A_FASTQ``` folder of absolute path setup by ```data_dir``` at ```iderare.yml```. Example of filled yml available on [iderare_example.yml](example/iderare_example.yml)
+**Note** : all exome files should be located in the ```input/A_FASTQ``` folder of absolute path setup by ```data_dir``` at ```iderare.yml```. Example of filled yml available on [example/iderare_example.yml](example/iderare_example.yml)
 <br><br>
 ![File Structure](picture/01.png)
 ![Example File](picture/02.png)
@@ -98,7 +98,7 @@ source iderare.sh
 ## Appendix
 <h3 id="clinical-information-example">Clinical Information Example</h3>
 
-- Coded clinical information example in txt format provided at example/[clinical_data_example.txt](example/clinical_data_example.txt). 
+- Coded clinical information example in txt format provided at [example/clinical_data_example.txt](example/clinical_data_example.txt). 
 - This clinical information is the patient phenotype and differential diagnoses complementing trio exome data provided at Bioproject database [1077459](https://www.ncbi.nlm.nih.gov/bioproject/1077459)
 
 #### Phenotype Data
