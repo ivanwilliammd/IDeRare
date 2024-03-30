@@ -180,6 +180,6 @@ conda remove --name iderare --all
 conda create --name iderare python=3.8
 conda activate iderare
 conda install pandas pyyaml numpy
-pip install obonet
+pip install hpo3
 echo "Install Python Dependencies"
 conda activate iderare

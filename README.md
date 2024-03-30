@@ -24,6 +24,9 @@ Ivan William Harsono<sup>a</sup>, Yulia Ariani<sup>b</sup>, Beben Benyamin<sup>c
 - Ensure you have at least 250GB free for database and application setup, and 100GB free for each Trio family exome set
 - The .yaml file path are assuming all the folder are stored in ```Downloads``` folder with subfolder of ```Database``` (for RefSeq, dbNSFP, dbSNP, ClinVar), ```Sandbox``` (for application and its database), ```IDeRare``` (git cloned folder)
 
+## Data Example
+- Phenotype data provided by the following part at ```clinical_data.txt``` file
+
 ## Quick Install
 1. Clone this repository
 ```bash
@@ -38,25 +41,48 @@ source install_dependencies.sh
 source download_database.sh
 cd ../
 ```
-5. **Optional** : translate the coded clinical information (mixture of SNOMED-CT, Orphanet, HPO) separated by enter at ```clinical_data.txt``` file. <br><br>
-This will update the ```iderare.yml``` *hpo_ids* section with the HPO code, and show the non-matched SNOMED-CT code in terminal.
+
+## Phenotype Translation and Phenotype Similarity Scoring (iderare_pheno.py) - Optional
+1. If you have SNOMED-CT, LOINC, ORPHANET, HPO, or OMIM code and would like to translate it to respective phenotype code (HPO) or check the similarity of its code, you could input the data to  ```clinical_data.txt``` file and run ```iderare_phen.py``` <br>Step by step implementation could be checked on Jupyter Notebook provided at ```iderare_phen.ipynb``` <br>
 ```bash
 conda activate iderare
-python iderare_phentl.py
+python iderare_pheno.py
 ```
-<br> Example of ```clinical_data.txt``` file
-```txt
-SNOMEDCT:65959000 // Differential Diagnosis 1 : Beta thalassemia (disorder)
-SNOMEDCT:11179002 // Differential Diagnosis 2 : Glycogen storage disease, type IV (disorder)
-SNOMEDCT:190794006 // Differential Diagnosis 3 : Gaucher Disease (disorder)
-ICD-10:E75.2 // / Other Sphingolipidosis
 
-SNOMEDCT:258211005 // Inheritance pattern : Autosomal recessive inheritance (qualifier value)
-SNOMEDCT:80515008 // Physical examination finding : Hepatomegaly
-SNOMEDCT:389026000 // Physical examination finding : Ascites
-LOINC:2862-1|L // Lab Result : Hypoalbuminemia
-LOINC:718-7|L // Lab Result : Low Hemoglobin Concentration
-```
+<a id="clinical-data-example"></a>
+#### Clinical Data example
+| Clinical Finding | Source of Information | Code Type | EMR Code | Interpretation |
+|----------------------|------|------|----------|----------|
+| Autosomal recessive inheritance | Inheritance Pattern | SNOMED-CT  | SNOMEDCT:258211005 |
+| Hepatosplenomegaly | Physical Examination | SNOMED-CT | SNOMEDCT:36760000 |
+| Anemia | Physical Examination | SNOMED-CT | SNOMEDCT:271737000 |
+| Ascites | Physical Examination | SNOMED-CT | SNOMEDCT:389026000 |
+| Inadequate RBC production | Problem List | SNOMED-CT | SNOMEDCT:70730006 |
+| Abnormality of bone marrow cell morphology | Problem List | SNOMED-CT | SNOMEDCT:127035006 |
+| Cholestasis | Problem List | SNOMED-CT | SNOMEDCT:33688009  |
+| Abnormal liver function | Problem List | SNOMED-CT | SNOMEDCT:75183008 |
+| Impending hepatic failure | Problem List | SNOMED-CT | SNOMEDCT:75183008 |
+| Osteopenia | Problem List (Radiology Finding) | SNOMED-CT | SNOMEDCT:312894000 |
+| Mitral regurgitation | Problem List (Cardiology Finding) | SNOMED-CT | SNOMEDCT:56786000 |
+| Metabolic alkalosis | Problem List (Blood Gas Analysis) | SNOMED-CT | SNOMEDCT:HP:0200114 |
+| Low Albumin Serum Level | Clinical Pathology (Lab) | LOINC | LOINC:1751-7 | L |
+| Low HDL Level | Clinical Pathology (Lab) | LOINC | LOINC:2085-9 | L |
+| Low Platelet Count | Clinical Pathology (Lab) | LOINC | LOINC:777-3 | L |
+| Increased Lactate Level | Clinical Pathology (Lab) | LOINC | LOINC:2542-7 | H |
+| Increase Hepatic Glycogen Content | Liver Biopsy Pathology Anatomy | HPO | HP:0006568 |
+| Bone-marrow foam cells | Pathology Anatomy Bone Marrow Aspiration | HPO | HP:0004333 |
+| Failure to thrive during infancy | Developmental history | HPO | HP:0001531 |
+Abnormal lower motor neuron morphology
+Elevated hepatic transaminases
+
+| Differential Diagnosis | Code Type | EMR Code |
+|----------------------|------|----------|
+| Beta thalassemia | SNOMED-CT | SNOMEDCT:65959000 |
+| Glycogen storage disease, type IV | SNOMED-CT | SNOMEDCT:11179002 |
+| Gaucher Disease | SNOMED-CT | SNOMEDCT:190794006 |
+| Other Sphingolipidosis | SNOMED-CT | ICD-10:E75.2 |
+
+
 1. Set the data, directory file reference and trio information on ```iderare.yml```.<br><br> 
 **Note** : all exome files should be located in the ```input/A_FASTQ``` folder of absolute path setup by ```data_dir``` at ```iderare.yml```
 <br><br>
