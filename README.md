@@ -112,7 +112,7 @@ source iderare_pheno.sh
 | Niemann Pick Disease type C | SNOMED-CT | 66751000 |SNOMEDCT:66751000 |
 | Glycogen storage diseases spectrum | ICD10 | E74.0 | ICD-10:E74.0 |
 
-### Preparing the iderare.yml for phenotype-genotype analysis pipeline
+### Preparing the iderare.yml for phenotype-based-prioritization exome analysis pipeline
 1. Set the data, directory file reference and trio information on ```iderare.yml```.<br><br> 
 **Note** : all exome files should be located in the ```input/A_FASTQ``` folder of absolute path setup by ```data_dir``` at ```iderare.yml```. Example of filled yml available on [iderare_example.yml](example/iderare_example.yml)
 <br><br>
