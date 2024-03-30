@@ -46,10 +46,36 @@ cd ../
 
 ### Phenotype Translation and Phenotype Similarity Scoring (iderare_pheno.py) - Optional
 1. If you have SNOMED-CT, LOINC, ORPHANET, HPO, or OMIM code and would like to translate it to respective phenotype code (HPO) or check the similarity of its code, you could input the data to  ```clinical_data.txt``` file 
-2. Run ```iderare_pheno.sh``` (Interactive jupyter notebook available)
+2. Run ```iderare_pheno.sh``` (Interactive jupyter notebook available)<br>
 ```bash
 source iderare_pheno.sh
 ```
+3. The output of this file will be saved on [output folder](output), with the file tree and explanation as following.
+```
+.
+└── output
+    ├── {datetime}_Linkage of DDx.png
+    ├── {datetime}_Linkage of DDx with threshold .png
+    ├── {datetime}_Linkage of Causative Gene with.png
+    ├── {datetime}_Linkage of Causative Disease w.png
+    ├── {datetime}_differential_diagnosis_similarity.tsv
+    ├── {datetime}_differential_recommended_disease_similarity.tsv
+    ├── {datetime}_differential_recommended_gene_similarity.tsv
+    ├── {datetime}_transformed_hpo_set.tsv
+    └── {datetime}_transformed_hpo_set.txt
+```
+
+| File name | Description |
+|-----------|-------------|
+| {datetime}_Linkage of DDx.png | Dendogram of the linkage analysis of DDx provided on clinical_data.txt (all) |
+| {datetime}_Linkage of DDx with threshold .png | Dendogram of the linkage analysis of DDx provided on clinical_data.txt (threshold) |
+| {datetime}_Linkage of Causative Gene with.png | Dendogram of potential causative top-n candidate gene related to patient's phenotype (from HPO OMIM database) |
+| {datetime}_Linkage of Causative Disease w.png | Dendogram of potential causative top-n candidate disease related to patient's phenotype (from HPO OMIM database) |
+| {datetime}_differential_diagnosis_similarity.tsv | TSV file of differential diagnosis similarity score |
+| {datetime}_differential_recommended_disease_similarity.tsv | TSV file of all disease similarity score |
+| {datetime}_differential_recommended_gene_similarity.tsv | TSV file of all gene similarity score |
+| {datetime}_transformed_hpo_set.tsv | Converted clinical_data to readily used HPO code |
+| {datetime}_transformed_hpo_set.tsv | Converted clinical_data to readily used HPO list for yml |
 
 <a id="clinical-data-example"></a>
 #### Coded clinical Data example related to exome data provided at Bioproject database [1077459](https://www.ncbi.nlm.nih.gov/bioproject/1077459)
