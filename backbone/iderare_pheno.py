@@ -6,56 +6,22 @@
 # %%
 import os
 from datetime import datetime
+import argparse
+import yaml
 
 import pandas as pd
 import numpy as np
-import yaml
 from pyhpo import Ontology, HPOSet, Omim, stats
 import scipy.cluster
 from matplotlib import pyplot as plt
 
 Ontology(os.path.join(os.getcwd(), 'phenotype', 'rawdl_20240310'))
 
-import argparse
-
+# %%
+# Declaring default iderare_pheno parameter
 def iderare_pheno(threshold=0.4, differential=10, recommendation=20, add_yml=False):
     # Your function logic here
     return threshold, differential, recommendation, add_yml
-
-# %%
-# Declare the folder path for phenotype data source
-phenotype_folder = os.path.join(os.getcwd(), 'phenotype', 'subset')
-
-# Declare database useds for mapping
-icd10omim = 'icd102omim_subset.tsv'
-loinc2hpo = 'loinc2hpo_standardized.tsv'
-orpha2omim = 'orpha2omim_subset.tsv'
-omim2hpo = 'omim2hpo_subset.tsv'
-snomed2hpo = 'snomed2hpo_subset.tsv'
-snomed2orpha = 'snomed2orpha_subset.tsv'
-
-# iderare yaml configuration file
-yaml_file = 'iderare.yaml'
-
-# Clinical data dummy in txt format separated with new line
-clinical_data = 'clinical_data.txt'
-
-# Read the clinical data and parse the data
-icd10omim_df = pd.read_csv(os.path.join(phenotype_folder, icd10omim), sep='\t')
-loinc2hpo_df = pd.read_csv(os.path.join(phenotype_folder, loinc2hpo), sep='\t')
-orpha2omim_df = pd.read_csv(os.path.join(phenotype_folder, orpha2omim), sep='\t')
-omim2hpo_df = pd.read_csv(os.path.join(phenotype_folder, omim2hpo), sep='\t')
-snomed2hpo_df = pd.read_csv(os.path.join(phenotype_folder, snomed2hpo), sep='\t')
-snomed2orpha_df = pd.read_csv(os.path.join(phenotype_folder, snomed2orpha), sep='\t')
-
-# Setup similarity threshold, number of n-top differential, and number of recommended alternative diagnoses 
-threshold = 0.4
-diffx = 10
-recx = 20
-
-# Read line from clinical_data and parse the data to list
-with open(clinical_data, 'r') as file:
-    clinical_data_list = file.read().splitlines()
 
 # %%
 # Convert data(s) to dataframe
@@ -266,8 +232,8 @@ def threshold_similarity(omim_object, hpo_sets, threshold=0.3, differential=10, 
     omim_sets = [d[2] for d in omim_object]
 
     # Check similarity between phenotype (HPO) and differential diagnosis (OMIM)
-    print("Get the similarity score between Patient's phenotype compared to OMIM Object using 'graphic' method and 'BMA' combine method.")
-    similarities = hpo_sets.similarity_scores(omim_sets, method='graphic', combine='BMA')
+    print("Get the similarity score between Patient's phenotype compared to OMIM Object using 'graphic' method and 'bma' combine method.")
+    similarities = hpo_sets.similarity_scores(omim_sets, method='graphic', combine='bma')
     print("Similarity analysis done.\n")
 
     # Sort the indices based on similarity result in descending manner
@@ -305,7 +271,7 @@ def threshold_similarity(omim_object, hpo_sets, threshold=0.3, differential=10, 
         print(sorted_object_name_gt_threshold)
 
 
-    print("Get the linkage analysis of OMIM Object using 'graphic' method and 'BMA' combine method..")
+    print("Get the linkage analysis of OMIM Object using 'graphic' method and 'bma' combine method..")
     
     # Perform linkage analysis of all sets
 
@@ -317,12 +283,12 @@ def threshold_similarity(omim_object, hpo_sets, threshold=0.3, differential=10, 
         print("Skipped linkage analysis. Please set linkage value to 'both', 'all', or 'threshold'.")
 
     if (linkage=='both' or linkage=='all') and (len(sorted_object_set) > 2):
-        print("Get the all set linkage analysis 'graphic' method and 'BMA' combine method..")
-        linkage_all = stats.linkage(sorted_object_set, similarity_method='graphic', combine='BMA')
+        print("Get the all set linkage analysis 'graphic' method and 'bma' combine method..")
+        linkage_all = stats.linkage(sorted_object_set, similarity_method='graphic', combine='bma')
         
     if (linkage=='both' or linkage=='threshold') and (len(sorted_object_set_gt_threshold) > 2):
-        print("Get the threshold-based linkage analysis 'graphic' method and 'BMA' combine method..")
-        linkage_threshold = stats.linkage(sorted_object_set_gt_threshold, similarity_method='graphic', combine='BMA')
+        print("Get the threshold-based linkage analysis 'graphic' method and 'bma' combine method..")
+        linkage_threshold = stats.linkage(sorted_object_set_gt_threshold, similarity_method='graphic', combine='bma')
 
 
     # Perform linkage analysis of all sets accepting threshold
@@ -393,17 +359,49 @@ def omim_recommendation(hpo_set, type='gene', threshold=0.3, recommendation=50):
     # Check similarity between phenotype (HPO) and differential diagnosis (OMIM)
     return threshold_similarity(omim_set, hpo_sets, threshold, recommendation, linkage='threshold')
 
+# %%
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("iderare_pheno.py")
-    parser.add_argument("-t", "--threshold", help="Threshold used for dendogram and filtering out the minimum similarity score as criteria subsetting differential diagnoses set", type=float, default=0.0)
-    parser.add_argument("-d", "--differential", help="Threshold used for the maximum number of differential diagnoses subset allowed", type=int, default=0)
-    parser.add_argument("-r", "--recommendation", help="Threshold used for the maximum number of recommendation subset allowed for each gene-disease recommendation", type=int, default=0)
+    parser.add_argument("-t", "--threshold", help="Threshold used for dendogram and filtering out the minimum similarity score as criteria subsetting differential diagnoses set", type=float, default=0.4)
+    parser.add_argument("-d", "--differential", help="Threshold used for the maximum number of differential diagnoses subset allowed", type=int, default=10)
+    parser.add_argument("-r", "--recommendation", help="Threshold used for the maximum number of recommendation subset allowed for each gene-disease recommendation", type=int, default=20)
     parser.add_argument("-y", "--add-yml", help="Command to directly add the final HPOset to iderare.yml file", action="store_true")
-
     args = parser.parse_args()
 
-    threshold, differential, recommendation, add_yml = iderare_pheno(args.threshold, args.differential, args.recommendation, args.add_yml)
-    # %%
+    # Declare the folder path for phenotype data source
+    phenotype_folder = os.path.join(os.getcwd(), 'phenotype', 'subset')
+
+    # Declare database useds for mapping
+    icd10omim = 'icd102omim_subset.tsv'
+    loinc2hpo = 'loinc2hpo_standardized.tsv'
+    orpha2omim = 'orpha2omim_subset.tsv'
+    omim2hpo = 'omim2hpo_subset.tsv'
+    snomed2hpo = 'snomed2hpo_subset.tsv'
+    snomed2orpha = 'snomed2orpha_subset.tsv'
+
+    # iderare yaml configuration file
+    yaml_file = 'iderare.yaml'
+
+    # Clinical data dummy in txt format separated with new line
+    clinical_data = 'clinical_data.txt'
+
+    # Read the clinical data and parse the data
+    icd10omim_df = pd.read_csv(os.path.join(phenotype_folder, icd10omim), sep='\t')
+    loinc2hpo_df = pd.read_csv(os.path.join(phenotype_folder, loinc2hpo), sep='\t')
+    orpha2omim_df = pd.read_csv(os.path.join(phenotype_folder, orpha2omim), sep='\t')
+    omim2hpo_df = pd.read_csv(os.path.join(phenotype_folder, omim2hpo), sep='\t')
+    snomed2hpo_df = pd.read_csv(os.path.join(phenotype_folder, snomed2hpo), sep='\t')
+    snomed2orpha_df = pd.read_csv(os.path.join(phenotype_folder, snomed2orpha), sep='\t')
+
+    # Setup similarity threshold, number of n-top differential, and number of recommended alternative diagnoses 
+    threshold, diffx, recx, add_yml = iderare_pheno(args.threshold, args.differential, args.recommendation, args.add_yml)
+    # threshold, diffx, recx, add_yml = iderare_pheno()
+
+    # Read line from clinical_data and parse the data to list
+    with open(clinical_data, 'r') as file:
+        clinical_data_list = file.read().splitlines()
+
+
     # Split phenotype diagnosis split
     hpo_sets, diagnosis_sets = phenotype_diagnosis_split(clinical_data_list)
     s_sim, [lnk_all, sr_dis_name, sr_dis_id], [lnk_thr, sr_dis_name_thr, sr_dis_id_thr] = omim_hpo_similarity(diagnosis_sets, hpo_sets, threshold=threshold, differential=diffx)
@@ -416,7 +414,6 @@ if __name__ == "__main__":
     for i in range(len(sr_dis_name_thr)):
         print('Rank', str(i+1), ':', sr_dis_name_thr[i], 'Sim:', s_sim[i])
 
-    # %%
     # Give recommendation of causative gene
     rg_s_sim,[ rg_lnk_all, rg_sr_dis_name, rg_sr_dis_id], [rg_lnk_thr, rg_sr_dis_name_thr, rg_sr_dis_thr] = omim_recommendation(hpo_sets, type='gene', threshold=threshold, recommendation=recx)
     lnk_thr_reg_dendo = linkage_dendogram(rg_lnk_thr, rg_sr_dis_name_thr, title='Linkage of Causative Gene with threshold gt ' + str(threshold) + ' or ' + str(recx) + '-top gene linkage', threshold=threshold)
@@ -426,7 +423,6 @@ if __name__ == "__main__":
     for i in range(len(rg_sr_dis_name_thr)):
         print('Rank', str(i+1), ':', rg_sr_dis_name_thr[i], 'Sim:', rg_s_sim[i])
 
-    # %%
     # Give recommendation of causative disease
     rd_s_sim, [rd_lnk_all, rd_sr_dis_name, rd_sr_dis_id], [rd_lnk_thr, rd_sr_dis_name_thr, rd_sr_dis_id_thr] = omim_recommendation(hpo_sets, type='disease', threshold=threshold, recommendation=recx)
     lnk_thr_rd_dendo = linkage_dendogram(rd_lnk_thr, rd_sr_dis_name_thr, title='Linkage of Causative Disease with threshold gt ' + str(threshold) + ' or ' + str(recx) + '-top disease linkage', threshold=threshold)
@@ -436,7 +432,6 @@ if __name__ == "__main__":
     for i in range(len(rd_sr_dis_name_thr)):
         print('Rank', str(i+1), ':', rd_sr_dis_name_thr[i], 'Sim:', rd_s_sim[i])
 
-    # %%
     # Summary :
     ## Output of transformed_clinical_data.txt in List format, non enter separated
     print('---------')
