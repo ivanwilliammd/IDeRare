@@ -118,11 +118,11 @@ source iderare.sh
 | Mitral regurgitation | Problem List (Cardiology Finding) | SNOMED-CT | 56786000 | |SNOMEDCT:56786000 |
 | Metabolic alkalosis | Problem List (Blood Gas Analysis) | SNOMED-CT | 1388004 | | SNOMEDCT:1388004 |
 | Low Albumin Serum Level | Clinical Pathology (Lab) | LOINC | 1751-7 | L | LOINC:1751-7|L |
-| Low HDL Level | Clinical Pathology (Lab) | LOINC | LOINC:2085-9 | L | LOINC:2085-9|L |
-| Low Platelet Count | Clinical Pathology (Lab) | LOINC | LOINC:777-3 | L | LOINC:777-3|L |
-| Increased Lactate Level | Clinical Pathology (Lab) | LOINC | LOINC:2542-7 | H | LOINC:2542-7|H |
-| Increased ALT Level | Clinical Pathology (Lab) | LOINC | LOINC:1742-6 | H | LOINC:1742-6|H |
-| Increased AST Level | Clinical Pathology (Lab) | LOINC | LOINC:1920-8 | H | LOINC:1920-8|H |
+| Low HDL Level | Clinical Pathology (Lab) | LOINC | 2085-9 | L | LOINC:2085-9|L |
+| Low Platelet Count | Clinical Pathology (Lab) | LOINC | 777-3 | L | LOINC:777-3|L |
+| Increased Lactate Level | Clinical Pathology (Lab) | LOINC | 2542-7 | H | LOINC:2542-7|H |
+| Increased ALT Level | Clinical Pathology (Lab) | LOINC | 1742-6 | H | LOINC:1742-6|H |
+| Increased AST Level | Clinical Pathology (Lab) | LOINC | 1920-8 | H | LOINC:1920-8|H |
 | Abnormal lower motor neuron | Disease Spectrum related to EMG result | HPO | 0002366 | | HP:0002366 |
 | Increase Hepatic Glycogen Content | Liver Biopsy Pathology Interpretation | HPO | 0006568 | | HP:0006568 |
 | Bone-marrow foam cells | Pathology Anatomy Bone Marrow Aspiration | HPO | 0004333 | | HP:0004333 |
