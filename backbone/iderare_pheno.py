@@ -266,8 +266,8 @@ def threshold_similarity(omim_object, hpo_sets, threshold=0.3, differential=10, 
     omim_sets = [d[2] for d in omim_object]
 
     # Check similarity between phenotype (HPO) and differential diagnosis (OMIM)
-    print("Get the similarity score between Patient's phenotype compared to OMIM Object using 'graphic' method and 'BWA' combine method.")
-    similarities = hpo_sets.similarity_scores(omim_sets, method='graphic', combine='BWA')
+    print("Get the similarity score between Patient's phenotype compared to OMIM Object using 'graphic' method and 'BMA' combine method.")
+    similarities = hpo_sets.similarity_scores(omim_sets, method='graphic', combine='BMA')
     print("Similarity analysis done.\n")
 
     # Sort the indices based on similarity result in descending manner
@@ -305,7 +305,7 @@ def threshold_similarity(omim_object, hpo_sets, threshold=0.3, differential=10, 
         print(sorted_object_name_gt_threshold)
 
 
-    print("Get the linkage analysis of OMIM Object using 'graphic' method and 'BWA' combine method..")
+    print("Get the linkage analysis of OMIM Object using 'graphic' method and 'BMA' combine method..")
     
     # Perform linkage analysis of all sets
 
@@ -317,12 +317,12 @@ def threshold_similarity(omim_object, hpo_sets, threshold=0.3, differential=10, 
         print("Skipped linkage analysis. Please set linkage value to 'both', 'all', or 'threshold'.")
 
     if (linkage=='both' or linkage=='all') and (len(sorted_object_set) > 2):
-        print("Get the all set linkage analysis 'graphic' method and 'BWA' combine method..")
-        linkage_all = stats.linkage(sorted_object_set, similarity_method='graphic', combine='BWA')
+        print("Get the all set linkage analysis 'graphic' method and 'BMA' combine method..")
+        linkage_all = stats.linkage(sorted_object_set, similarity_method='graphic', combine='BMA')
         
     if (linkage=='both' or linkage=='threshold') and (len(sorted_object_set_gt_threshold) > 2):
-        print("Get the threshold-based linkage analysis 'graphic' method and 'BWA' combine method..")
-        linkage_threshold = stats.linkage(sorted_object_set_gt_threshold, similarity_method='graphic', combine='BWA')
+        print("Get the threshold-based linkage analysis 'graphic' method and 'BMA' combine method..")
+        linkage_threshold = stats.linkage(sorted_object_set_gt_threshold, similarity_method='graphic', combine='BMA')
 
 
     # Perform linkage analysis of all sets accepting threshold
