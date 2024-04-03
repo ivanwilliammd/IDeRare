@@ -120,7 +120,7 @@ source iderare.sh
 | Low Albumin Serum Level | Clinical Pathology (Lab) | LOINC | 1751-7 | L | LOINC:1751-7|L |
 | Low HDL Level | Clinical Pathology (Lab) | LOINC | 2085-9 | L | LOINC:2085-9|L |
 | Low Platelet Count | Clinical Pathology (Lab) | LOINC | 777-3 | L | LOINC:777-3|L |
-| Increased Lactate Level | Clinical Pathology (Lab) | LOINC | 2542-7 | H | LOINC:2542-7|H |
+| Increased Lactate Level | Clinical Pathology (Lab) | LOINC | 2519-7 | H | LOINC:2519-7|H |
 | Increased ALT Level | Clinical Pathology (Lab) | LOINC | 1742-6 | H | LOINC:1742-6|H |
 | Increased AST Level | Clinical Pathology (Lab) | LOINC | 1920-8 | H | LOINC:1920-8|H |
 | Abnormal lower motor neuron | Disease Spectrum related to EMG result | HPO | 0002366 | | HP:0002366 |
