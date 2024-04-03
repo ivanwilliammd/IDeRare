@@ -38,11 +38,11 @@ def result_to_tsv(term_id, name, sim_score=None, filename='{}_result'.format(dat
 # %%
 # Convert SNOMED to ORPHA First
 def snomed_orpha_parser(clinical_data, df):
-    print('Trying to parse ORPHA from SNOMED-CT', clinical_data)
+    print('Trying to parse ORPHA from SNOMEDCT', clinical_data)
     
     if 'SNOMEDCT:' in clinical_data:
         if clinical_data not in df['code'].unique() :
-            print('This SNOMED-CT code is not a clinical finding mapped with ORPHA, please check the SNOMED to ORPHA for diagnosis mapping.')
+            print('This SNOMEDCT code is not a clinical finding mapped with ORPHA, please check the SNOMED to ORPHA for diagnosis mapping.')
             snomed_sugg = df[df['code'].str.contains(clinical_data.strip('SNOMEDCT:'))]['code'].drop_duplicates()
             print('Sugggestion : It is possible that you mean any of this code:', (', ').join(snomed_sugg.values) , '?\n')
             return []
@@ -93,10 +93,10 @@ def hpo_parser(clinical_data, df):
             print('Example : LOINC:721-1|H for Qn lab examination OR LOINC:721-1|NEG for Nominal / Ordinal Lab Examination', '\n')
             return []
         
-    # SNOMED-CT case
+    # SNOMEDCT case
     elif 'SNOMEDCT:' in clinical_data:
         if clinical_data not in df['SNOMED_CT_ID'].unique() :
-            print('This SNOMED-CT code is not a clinical finding mapped with HPO, please check the SNOMED to OMIM for diagnosis mapping.')
+            print('This SNOMEDCT code is not a clinical finding mapped with HPO, please check the SNOMED to OMIM for diagnosis mapping.')
             snomed_sugg = df[df['SNOMED_CT_ID'].str.contains(clinical_data.strip('SNOMEDCT:'))]['SNOMED_CT_ID'].drop_duplicates()
             print('Sugggestion : It is possible that you mean any of this code:', (', ').join(snomed_sugg.values) , '?\n')
             return []
@@ -112,7 +112,7 @@ def hpo_parser(clinical_data, df):
         return []
 
 # %%
-# OMIM Parser used for diagnosis related terminology ICD-10, ORPHA, SNOMED-CT to be translated to OMIM
+# OMIM Parser used for diagnosis related terminology ICD-10, ORPHA, SNOMEDCT to be translated to OMIM
 def omim_parser(clinical_data,df):
     print('Trying to parse OMIM from terminology', clinical_data)
 
@@ -179,10 +179,10 @@ def phenotype_diagnosis_split(clinical_data_list) :
             snomed_hpo = hpo_parser(clinical_data, snomed2hpo_df)
             # If SNOMED is direct phenotype recognized by HPO
             if len(snomed_hpo) > 0:
-                print('SNOMED-CT is recognized as clinical finding, parsing to HPO and add to list')
+                print('SNOMEDCT is recognized as clinical finding, parsing to HPO and add to list')
                 hpo_sets.extend(snomed_hpo)
             else: # If SNOMED is clinical disorders, then convert to ORPHA --> convert to OMIM
-                print('Trying to recognize SNOMED-CT as clinical disorder, parsing to ORPHA and respective OMIM format')
+                print('Trying to recognize SNOMEDCT as clinical disorder, parsing to ORPHA and respective OMIM format')
                 snomed_orpha = snomed_orpha_parser(clinical_data, snomed2orpha_df)
                 # Convert the ORPHA to OMIM
                 for item in snomed_orpha:
@@ -214,7 +214,7 @@ def phenotype_diagnosis_split(clinical_data_list) :
 
         else :
             print('The terminology is not recognized, please check the input format.')
-            print('Allowable format is : ICD-10:xxxx OR ORPHA:xxxxx OR SNOMED-CT:xxxxx OR OMIM:xxxxx for clinical disorder to be converted to OMIM', '\n')
+            print('Allowable format is : ICD-10:xxxx OR ORPHA:xxxxx OR SNOMEDCT:xxxxx OR OMIM:xxxxx for clinical disorder to be converted to OMIM', '\n')
             print('Allowable format is : HP:xxxxx OR LOINC:xxxxx|Interpretation OR SNOMEDCT:xxxxx for clinical finding to be converted to HPO', '\n')
             continue
 
