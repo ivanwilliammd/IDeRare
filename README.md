@@ -77,10 +77,10 @@ source iderare_pheno.sh
 
 | File name | Description |
 |-----------|-------------|
-| {datetime}_Linkage of DDx.png | Dendogram of the linkage analysis of DDx provided on clinical_data.txt (all) |
-| {datetime}_Linkage of DDx with threshold .png | Dendogram of the linkage analysis of DDx provided on clinical_data.txt (threshold) |
-| {datetime}_Linkage of Causative Gene with.png | Dendogram of potential causative top-n candidate gene related to patient's phenotype (from HPO OMIM database) |
-| {datetime}_Linkage of Causative Disease w.png | Dendogram of potential causative top-n candidate disease related to patient's phenotype (from HPO OMIM database) |
+| {datetime}_Linkage of DDx.png | dendrogram of the linkage analysis of DDx provided on clinical_data.txt (all) |
+| {datetime}_Linkage of DDx with threshold .png | dendrogram of the linkage analysis of DDx provided on clinical_data.txt (threshold) |
+| {datetime}_Linkage of Causative Gene with.png | dendrogram of potential causative top-n candidate gene related to patient's phenotype (from HPO OMIM database) |
+| {datetime}_Linkage of Causative Disease w.png | dendrogram of potential causative top-n candidate disease related to patient's phenotype (from HPO OMIM database) |
 | {datetime}_differential_diagnosis_similarity.tsv | TSV file of differential diagnosis similarity score |
 | {datetime}_differential_recommended_disease_similarity.tsv | TSV file of all disease similarity score |
 | {datetime}_differential_recommended_gene_similarity.tsv | TSV file of all gene similarity score |

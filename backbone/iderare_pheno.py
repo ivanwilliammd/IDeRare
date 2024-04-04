@@ -284,11 +284,31 @@ def threshold_similarity(omim_object, hpo_sets, threshold=0.3, differential=10, 
 
     if (linkage=='both' or linkage=='all') and (len(sorted_object_set) > 2):
         print("Get the all set linkage analysis 'graphic' method and 'bma' combine method..")
-        linkage_all = stats.linkage(sorted_object_set, similarity_method='graphic', combine='bma')
+        if len(sorted_object_set) > 100:
+            print("All data contained is more than 100, linkage_analysis will be skipped.")
+        else:
+            linkage_all = stats.linkage(sorted_object_set, similarity_method='graphic', combine='bma')
         
     if (linkage=='both' or linkage=='threshold') and (len(sorted_object_set_gt_threshold) > 2):
         print("Get the threshold-based linkage analysis 'graphic' method and 'bma' combine method..")
-        linkage_threshold = stats.linkage(sorted_object_set_gt_threshold, similarity_method='graphic', combine='bma')
+        if len(sorted_object_set_gt_threshold) > 100:
+            print("The threshold set resulting more than 100 entries, only the top 100 with highest similarities get linkage analysis.")
+            linkage_threshold = stats.linkage(sorted_object_set_gt_threshold[:100], similarity_method='graphic', combine='bma')
+            sorted_object_name_gt_threshold = sorted_object_name_gt_threshold[:100]
+            sorted_object_id_gt_threshold = sorted_object_id_gt_threshold[:100]
+        elif len(sorted_object_set_gt_threshold) == 0:
+            print("The threshold set resulting 0 entries, use the top-N linkage analysis performed.")
+            linkage_threshold = stats.linkage(sorted_object_set[:differential], similarity_method='graphic', combine='bma')
+            sorted_object_name_gt_threshold = sorted_object_name[:differential]
+            sorted_object_id_gt_threshold = sorted_object_id[:differential]
+        else:
+            linkage_threshold = stats.linkage(sorted_object_set_gt_threshold, similarity_method='graphic', combine='bma')
+
+
+    # Perform linkage analysis of all sets accepting threshold
+    print("Linkage analysis perfomed successfully.")
+
+    return sorted_similarities, [linkage_all, sorted_object_name, sorted_object_id], [linkage_threshold, sorted_object_name_gt_threshold, sorted_object_id_gt_threshold]
 
 
     # Perform linkage analysis of all sets accepting threshold
@@ -312,8 +332,8 @@ def omim_hpo_similarity(omim_set, hpo_set, threshold=0.3, differential=100):
     return threshold_similarity(omim_diseases, hpo_sets, threshold, differential, linkage='both')
 
 # %%
-# Print the dendogram tree
-def linkage_dendogram(linkage, labels, title='Similarity', threshold=0.3, path_to_save=None):
+# Print the dendrogram tree
+def linkage_dendrogram(linkage, labels, title='Similarity', threshold=0.3, path_to_save=None):
     if len(linkage) == 0:
         print("Linkage is empty. The data not possible due to blank linkage information.")
         return
@@ -362,7 +382,7 @@ def omim_recommendation(hpo_set, type='gene', threshold=0.3, recommendation=50):
 # %%
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("iderare_pheno.py")
-    parser.add_argument("-t", "--threshold", help="Threshold used for dendogram and filtering out the minimum similarity score as criteria subsetting differential diagnoses set", type=float, default=0.4)
+    parser.add_argument("-t", "--threshold", help="Threshold used for dendrogram and filtering out the minimum similarity score as criteria subsetting differential diagnoses set", type=float, default=0.4)
     parser.add_argument("-d", "--differential", help="Threshold used for the maximum number of differential diagnoses subset allowed", type=int, default=10)
     parser.add_argument("-r", "--recommendation", help="Threshold used for the maximum number of recommendation subset allowed for each gene-disease recommendation", type=int, default=20)
     parser.add_argument("-y", "--add-yml", help="Command to directly add the final HPOset to iderare.yml file", action="store_true")
@@ -406,17 +426,17 @@ if __name__ == "__main__":
     hpo_sets, diagnosis_sets = phenotype_diagnosis_split(clinical_data_list)
     s_sim, [lnk_all, sr_dis_name, sr_dis_id], [lnk_thr, sr_dis_name_thr, sr_dis_id_thr] = omim_hpo_similarity(diagnosis_sets, hpo_sets, threshold=threshold, differential=diffx)
 
-    # Plot all similarity in dendogram threshold
-    lnk_all_dendo = linkage_dendogram(lnk_all, sr_dis_name, title='Linkage of DDx', threshold=threshold)
-    lnk_thr_dendo = linkage_dendogram(lnk_thr, sr_dis_name_thr, title='Linkage of DDx with threshold gt ' + str(threshold) + ' or ' + str(diffx) + '-top diagnoses linkage', threshold=threshold)
+    # Plot all similarity in dendrogram threshold
+    lnk_all_dendo = linkage_dendrogram(lnk_all, sr_dis_name, title='Linkage of DDx', threshold=threshold)
+    lnk_thr_dendo = linkage_dendrogram(lnk_thr, sr_dis_name_thr, title='Linkage of DDx with threshold gt ' + str(threshold) + ' or ' + str(diffx) + '-top diagnoses linkage', threshold=threshold)
 
     # Print the result with similarity > threshold
     for i in range(len(sr_dis_name_thr)):
         print('Rank', str(i+1), ':', sr_dis_name_thr[i], 'Sim:', s_sim[i])
 
     # Give recommendation of causative gene
-    rg_s_sim,[ rg_lnk_all, rg_sr_dis_name, rg_sr_dis_id], [rg_lnk_thr, rg_sr_dis_name_thr, rg_sr_dis_thr] = omim_recommendation(hpo_sets, type='gene', threshold=threshold, recommendation=recx)
-    lnk_thr_reg_dendo = linkage_dendogram(rg_lnk_thr, rg_sr_dis_name_thr, title='Linkage of Causative Gene with threshold gt ' + str(threshold) + ' or ' + str(recx) + '-top gene linkage', threshold=threshold)
+    rg_s_sim,[ rg_lnk_all, rg_sr_dis_name, rg_sr_dis_id], [rg_lnk_thr, rg_sr_dis_name_thr, rg_sr_dis_id_thr] = omim_recommendation(hpo_sets, type='gene', threshold=threshold, recommendation=recx)
+    lnk_thr_reg_dendo = linkage_dendrogram(rg_lnk_thr, rg_sr_dis_name_thr, title='Linkage of Causative Gene with threshold gt ' + str(threshold) + ' or ' + str(recx) + '-top gene linkage', threshold=threshold)
 
     # Print the result with similarity > threshold
     print('Recommendation of high potential gene : ')
@@ -425,7 +445,7 @@ if __name__ == "__main__":
 
     # Give recommendation of causative disease
     rd_s_sim, [rd_lnk_all, rd_sr_dis_name, rd_sr_dis_id], [rd_lnk_thr, rd_sr_dis_name_thr, rd_sr_dis_id_thr] = omim_recommendation(hpo_sets, type='disease', threshold=threshold, recommendation=recx)
-    lnk_thr_rd_dendo = linkage_dendogram(rd_lnk_thr, rd_sr_dis_name_thr, title='Linkage of Causative Disease with threshold gt ' + str(threshold) + ' or ' + str(recx) + '-top disease linkage', threshold=threshold)
+    lnk_thr_rd_dendo = linkage_dendrogram(rd_lnk_thr, rd_sr_dis_name_thr, title='Linkage of Causative Disease with threshold gt ' + str(threshold) + ' or ' + str(recx) + '-top disease linkage', threshold=threshold)
 
     # Print the result with similarity > threshold
     print('Recommendation of high potential diagnoses : ')
