@@ -46,18 +46,18 @@ cd ../
 ### OPTIONAL - Phenotype Translation, Linkage Analysis, Phenotype Similarity Scoring, Gene-disease recommendation (iderare_pheno.py)
 1. This script is recommended if you would like to do conversion, linkage analysis, similarity scoring, and gene-disease recommendation based on the phenotype data provided at [clinical_data.txt](clinical_data.txt). Full feature : 
     - Convert the phenotype data to HPO code (accept mixed SNOMED, LOINC, and HPO code)
-    - Linkage analysis of differential diagnosis (accept mixed SNOMED, ICD10, ORPHA, OMIM code)
     - Similarity scoring of differential diagnosis
-    - Gene-disease recommendation based on the phenotype data.
-    - Similarity scoring of recommended causative gene and disease.
+    - Linkage analysis of differential diagnosis (accept mixed SNOMED, ICD10, ORPHA, OMIM code)
+    - Gene-disease recommendation based on the phenotype data similarity score compared to OMIM gene and disease database.
     - Linkage analysis of recommended causative gene and disease based on phenotype data.
     - Example of the clinical data provided at [Clinical Information Example section](#clinical-information-example)
+    - GUI Implementation of **iderare_pheno.py** could be accessed at [Streamlit example](https://bioinformatics-ivanwilliamharsono.streamlitapp.com/IDeRare_Pheno)
 2. Run ```iderare_pheno.sh``` (Interactive jupyter notebook available [here](backbone/iderare_pheno.ipynb))<br>
 ```bash
 # Advance usage of the script : available at iderare_pheno.sh file
 source iderare_pheno.sh
 ```
-3. The output of this file will be saved on [output folder](output), with the file tree and explanation as following.
+1. The output of this file will be saved on [output folder](output), with the file tree and explanation as following.
 ```
 .
 └── output
