@@ -44,14 +44,17 @@ cd ../
 ```
 
 ### OPTIONAL - Phenotype Translation, Linkage Analysis, Phenotype Similarity Scoring, Gene-disease recommendation (iderare_pheno.py)
+Interactive Webapps Implementation of **iderare_pheno.py** hosted at [Streamlit](https://bioinformatics-ivanwilliamharsono.streamlitapp.com/IDeRare_Pheno)
+
 1. This script is recommended if you would like to do conversion, linkage analysis, similarity scoring, and gene-disease recommendation based on the phenotype data provided at [clinical_data.txt](clinical_data.txt). Full feature : 
-    - Convert the phenotype data to HPO code (accept mixed SNOMED, LOINC, and HPO code)
-    - Similarity scoring of differential diagnosis
-    - Linkage analysis of differential diagnosis (accept mixed SNOMED, ICD10, ORPHA, OMIM code)
-    - Gene-disease recommendation based on the phenotype data similarity score compared to OMIM gene and disease database.
-    - Linkage analysis of recommended causative gene and disease based on phenotype data.
-    - Example of the clinical data provided at [Clinical Information Example section](#clinical-information-example)
-    - GUI Implementation of **iderare_pheno.py** could be accessed at [Streamlit example](https://bioinformatics-ivanwilliamharsono.streamlitapp.com/IDeRare_Pheno)
+    1. Convert the phenotype data to HPO code (accept mixed SNOMED, LOINC, and HPO code)
+    2. Similarity scoring of differential diagnosis
+    3. Linkage analysis of differential diagnosis (accept mixed SNOMED, ICD-10, ORPHA, OMIM code), include dendrogram tree visualization.
+        - This should help clinician to **systematically doing work-up and excluding similar diagnosis together** based on the patient\'s phenotype.
+    4. Gene and disease recommendation based on the phenotype data similarity scoring between **phenotype** and OMIM gene and disease databank.
+    5. Linkage analysis of recommended causative gene and disease based on phenotype data (include dendrogram tree visualization).
+        - This should help clinician to **explore / enrich their differential diagnosis** based on the patient\'s phenotype.
+    6. Example of the clinical data provided at [Clinical Information Example section](#clinical-information-example)
 2. Run ```iderare_pheno.sh``` (Interactive jupyter notebook available [here](backbone/iderare_pheno.ipynb))<br>
 ```bash
 # Advance usage of the script : available at iderare_pheno.sh file
