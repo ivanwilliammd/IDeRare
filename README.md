@@ -44,20 +44,23 @@ cd ../
 ```
 
 ### OPTIONAL - Phenotype Translation, Linkage Analysis, Phenotype Similarity Scoring, Gene-disease recommendation (iderare_pheno.py)
+Interactive Webapps Implementation of **iderare_pheno.py** hosted at [Streamlit](https://bioinformatics-ivanwilliamharsono.streamlitapp.com/IDeRare_Pheno)
+
 1. This script is recommended if you would like to do conversion, linkage analysis, similarity scoring, and gene-disease recommendation based on the phenotype data provided at [clinical_data.txt](clinical_data.txt). Full feature : 
-    - Convert the phenotype data to HPO code (accept mixed SNOMED, LOINC, and HPO code)
-    - Linkage analysis of differential diagnosis (accept mixed SNOMED, ICD10, ORPHA, OMIM code)
-    - Similarity scoring of differential diagnosis
-    - Gene-disease recommendation based on the phenotype data.
-    - Similarity scoring of recommended causative gene and disease.
-    - Linkage analysis of recommended causative gene and disease based on phenotype data.
-    - Example of the clinical data provided at [Clinical Information Example section](#clinical-information-example)
+    1. Convert the phenotype data to HPO code (accept mixed SNOMED, LOINC, and HPO code)
+    2. Similarity scoring of differential diagnosis
+    3. Linkage analysis of differential diagnosis (accept mixed SNOMED, ICD-10, ORPHA, OMIM code), include dendrogram tree visualization.
+        - This should help clinician to **systematically doing work-up and excluding similar diagnosis together** based on the patient\'s phenotype.
+    4. Gene and disease recommendation based on the phenotype data similarity scoring between **phenotype** and OMIM gene and disease databank.
+    5. Linkage analysis of recommended causative gene and disease based on phenotype data (include dendrogram tree visualization).
+        - This should help clinician to **explore / enrich their differential diagnosis** based on the patient\'s phenotype.
+    6. Example of the clinical data provided at [Clinical Information Example section](#clinical-information-example)
 2. Run ```iderare_pheno.sh``` (Interactive jupyter notebook available [here](backbone/iderare_pheno.ipynb))<br>
 ```bash
 # Advance usage of the script : available at iderare_pheno.sh file
 source iderare_pheno.sh
 ```
-3. The output of this file will be saved on [output folder](output), with the file tree and explanation as following.
+1. The output of this file will be saved on [output folder](output), with the file tree and explanation as following.
 ```
 .
 └── output
@@ -74,10 +77,10 @@ source iderare_pheno.sh
 
 | File name | Description |
 |-----------|-------------|
-| {datetime}_Linkage of DDx.png | Dendogram of the linkage analysis of DDx provided on clinical_data.txt (all) |
-| {datetime}_Linkage of DDx with threshold .png | Dendogram of the linkage analysis of DDx provided on clinical_data.txt (threshold) |
-| {datetime}_Linkage of Causative Gene with.png | Dendogram of potential causative top-n candidate gene related to patient's phenotype (from HPO OMIM database) |
-| {datetime}_Linkage of Causative Disease w.png | Dendogram of potential causative top-n candidate disease related to patient's phenotype (from HPO OMIM database) |
+| {datetime}_Linkage of DDx.png | dendrogram of the linkage analysis of DDx provided on clinical_data.txt (all) |
+| {datetime}_Linkage of DDx with threshold .png | dendrogram of the linkage analysis of DDx provided on clinical_data.txt (threshold) |
+| {datetime}_Linkage of Causative Gene with.png | dendrogram of potential causative top-n candidate gene related to patient's phenotype (from HPO OMIM database) |
+| {datetime}_Linkage of Causative Disease w.png | dendrogram of potential causative top-n candidate disease related to patient's phenotype (from HPO OMIM database) |
 | {datetime}_differential_diagnosis_similarity.tsv | TSV file of differential diagnosis similarity score |
 | {datetime}_differential_recommended_disease_similarity.tsv | TSV file of all disease similarity score |
 | {datetime}_differential_recommended_gene_similarity.tsv | TSV file of all gene similarity score |
