@@ -113,7 +113,7 @@ source iderare.sh
 | Abnormality of bone marrow cell morphology | Problem List | SNOMED-CT | 127035006 | |SNOMEDCT:127035006 |
 | Cholestasis | Problem List | SNOMED-CT | 33688009 | |SNOMEDCT:33688009  |
 | Abnormal liver function | Problem List | SNOMED-CT | 75183008 | |SNOMEDCT:75183008 |
-| Impending hepatic failure | Problem List | SNOMED-CT | 75183008 | |SNOMEDCT:75183008 |
+| Impending hepatic failure | Problem List | SNOMED-CT | 59927004 | |SNOMEDCT:59927004 |
 | Osteopenia | Problem List (Radiology Finding) | SNOMED-CT | 312894000 | |SNOMEDCT:312894000 |
 | Mitral regurgitation | Problem List (Cardiology Finding) | SNOMED-CT | 56786000 | |SNOMEDCT:56786000 |
 | Metabolic alkalosis | Problem List (Blood Gas Analysis) | SNOMED-CT | 1388004 | | SNOMEDCT:1388004 |
