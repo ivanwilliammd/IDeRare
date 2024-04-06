@@ -427,7 +427,7 @@ if __name__ == "__main__":
     s_sim, [lnk_all, sr_dis_name, sr_dis_id], [lnk_thr, sr_dis_name_thr, sr_dis_id_thr] = omim_hpo_similarity(diagnosis_sets, hpo_sets, threshold=threshold, differential=diffx)
 
     # Plot all similarity in dendrogram threshold
-    lnk_all_dendo = linkage_dendrogram(lnk_all, sr_dis_name, title='Linkage of DDx', threshold=threshold)
+    lnk_all_dendo = linkage_dendrogram(lnk_all, sr_dis_name, title='Linkage of DDx')
     lnk_thr_dendo = linkage_dendrogram(lnk_thr, sr_dis_name_thr, title='Linkage of DDx with threshold gt ' + str(threshold) + ' or ' + str(diffx) + '-top diagnoses linkage', threshold=threshold)
 
     # Print the result with similarity > threshold
