@@ -42,6 +42,10 @@ source install_dependencies.sh
 source download_database.sh
 cd ../
 ```
+5. Optional : if you have difficulty in downoading the database and installing the executable dependencies, you could download the data from [here](https://urlqr.xyz/IDeRare-SuppDL) and extract it to the ```Downloads``` folder, the run the script below to execute ```install_dependencies.sh``` from step 7
+```bash
+source install_dependencies.sh --skip-executable
+```
 
 ### OPTIONAL - Phenotype Translation, Linkage Analysis, Phenotype Similarity Scoring, Gene-disease recommendation (iderare_pheno.py)
 Interactive Webapps Implementation of **iderare_pheno.py** hosted at [Streamlit](https://bioinformatics-ivanwilliamharsono.streamlitapp.com/IDeRare_Pheno)
