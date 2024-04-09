@@ -9,44 +9,44 @@ echo "STEP 0 : Setup Variable, Directory, and Ensure NVIDIA Docker Supported"
 # -------------------
 echo "STEP 0a: Set variable necessary"
 
-BIN_VERSION={{dv_version}}
-memory={{max_mem}}
-DEEPTRIO_MODEL={{dv_model}}
+BIN_VERSION=1.5.0
+memory=60G
+DEEPTRIO_MODEL=WES
 
-glnexus_version={{glnexus_version}}
-tiddit_version={{tiddit_version}}
+glnexus_version=1.4.1
+tiddit_version=3.6.1--py38h24c8ff8_0
 
 # Father
-father_name={{father}}
+father_name=V350145665_L04_B5EHOMdmhwXAACA-519
 
 # Mother
-mother_name={{mother}}
+mother_name=V350145665_L04_B5EHOMdmhwXAABA-517
 
 # Proband
-proband_name={{proband}}
+proband_name=V350145665_L04_B5EHOMdmhwXAAAA-515
 
 proband_SM=Proband
-proband_PU={{library}}
-proband_PL={{method}}
+proband_PU=AgilentV6
+proband_PL=DNBSeq
 proband_LB=WXS
 
-exomiser_solo={{proband}}_exomiser_solo.yml
-exomiser_solo_sv={{proband}}_tiddit_exomiser_solo.yml
-exomiser_trio={{proband}}_exomiser_trio.yml
+exomiser_solo=V350145665_L04_B5EHOMdmhwXAAAA-515_exomiser_solo.yml
+exomiser_solo_sv=V350145665_L04_B5EHOMdmhwXAAAA-515_tiddit_exomiser_solo.yml
+exomiser_trio=V350145665_L04_B5EHOMdmhwXAAAA-515_exomiser_trio.yml
 
 mother_SM=Mother
-mother_PU={{library}}
-mother_PL={{method}}
+mother_PU=AgilentV6
+mother_PL=DNBSeq
 mother_LB=WXS
 
 father_SM=Father
-father_PU={{library}}
-father_PL={{method}}
+father_PU=AgilentV6
+father_PL=DNBSeq
 father_LB=WXS
 
-trimming={{trimming}}
-solo_analysis={{solo_analysis}}
-trio_analysis={{trio_analysis}}
+trimming=false
+solo_analysis=false
+trio_analysis=true
 
 # Check if BIN_VERSION is null
 if [ -z "$BIN_VERSION" ]; then
@@ -103,7 +103,7 @@ fi
 echo "STEP 0b: Prepare directory and pedigree file"
 
 ## Pedigree file on INPUT_DIR (Just file name only)
-INPUT_DIR="{{data_dir}}/input"
+INPUT_DIR="/home/ivanwilliamharsono/Downloads/trio_patient/input"
 PEDIGREE="trio.ped"
 
 ## Subfolder of INPUT_DIR
@@ -111,23 +111,23 @@ FASTQ_DIR=${INPUT_DIR}/A_FASTQ
 SAM_DIR=${INPUT_DIR}/B_RAW_SAM_BAM
 
 ## Output Dir
-OUTPUT_DIR="{{data_dir}}/output"
-ANNOTATED_DIR="{{data_dir}}/annotated"
-SV_DIR="{{data_dir}}/sv_tiddit"
-EXOMISER_DIR="{{data_dir}}/exomiser"
+OUTPUT_DIR="/home/ivanwilliamharsono/Downloads/trio_patient/output"
+ANNOTATED_DIR="/home/ivanwilliamharsono/Downloads/trio_patient/annotated"
+SV_DIR="/home/ivanwilliamharsono/Downloads/trio_patient/sv_tiddit"
+EXOMISER_DIR="/home/ivanwilliamharsono/Downloads/trio_patient/exomiser"
 
 ## FASTA file on REFERENCE_DIR (Just file name only)
-REFERENCE_DIR={{ref_dir}}
-REFSEQ_FASTA={{ref_fasta}}
+REFERENCE_DIR=/home/ivanwilliamharsono/Downloads/Database
+REFSEQ_FASTA=hg38.p14.fa
 
-snpEff_dir={{snpEff_dir}}
-snpEff_ver={{snpEff_ver}}
-dbnsfp={{dbNSFP_file}}
-dbSNP={{dbSNP_file}}
-ClinVar={{ClinVar_file}}
-chr_rename={{chr_rename}}
+snpEff_dir=/home/ivanwilliamharsono/Downloads/Sandbox/snpEff/data
+snpEff_ver=GRCh38.p14
+dbnsfp=/home/ivanwilliamharsono/Downloads/Database/dbNSFPv4.5a_custombuild.gz
+dbSNP=/home/ivanwilliamharsono/Downloads/Database/Homo_sapiens_assembly38.dbsnp156_snpsift.fixed.vcf.gz
+ClinVar=/home/ivanwilliamharsono/Downloads/Database/clinvar_20240215.vcf.gz
+chr_rename=/home/ivanwilliamharsono/Downloads/IDeRare/convert/vcf_rename.chrnames
 
-cd {{data_dir}}
+cd /home/ivanwilliamharsono/Downloads/trio_patient
 
 ## Make Directory
 mkdir -p ${INPUT_DIR} ${FASTQ_DIR} ${SAM_DIR} ${OUTPUT_DIR} ${OUTPUT_DIR}/intermediate_results_dir_proband ${OUTPUT_DIR}/intermediate_results_dir_trio ${ANNOTATED_DIR} ${SV_DIR} ${EXOMISER_DIR}
@@ -767,7 +767,7 @@ fi
 
 # Check if trio_analysis is true
 if [ "$trio_analysis" = true ]; then
-    echo "STEP 9: Exomiser SNP Trio Analysis"
+    echo "STEP 9: Exomiser SNP Solo Trio Analysis"
     exomiser --analysis ${exomiser_trio}
 fi
 
