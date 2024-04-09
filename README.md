@@ -62,6 +62,11 @@ Interactive Webapps Implementation of **iderare_phenomizing.py** hosted at [Stre
 2. Run ```iderare_phenomizing.sh```
 3. **Advance usage** : you could add extra parameter of **threshold**, top-n **differential** diagnoses gene, and number of gene / diagnoses **recommendation** by using the 
 ```bash
+# Threshold : float 0 to 1 - default : 0.4 . Description : Threshold of similarity score to be considered as similar
+# Differential : int - default : 10 . Description : Top-n differential diagnosis to be furtherly focused on linkage analysis / dendrogram plot, used only if there are no diagnoses passing the minimum threshold
+# Recommendation : int - default : 20 . Description : Top-n gene / disease recommendation to be furtherly focused on linkage analysis / dendrogram plot, used only if there are no diagnoses passing the minimum threshold
+### Note : all tsv file in output contained all differential diagnoses, and all gene/disease recommendation with their respective similarity score
+
 source iderare_phenomizing.sh --threshold 0.5 --differential 5 --recommendation 5
 ```
 
@@ -102,7 +107,10 @@ For more detail, please refer to [iderare-pheno](https://github.com/ivanwilliamm
 ![Example File](picture/02.png)
 1. Run the bash script
 ```bash
-source iderare.sh 
+# Mode : both, solo, trio - default : both . Both will run the pipeline for solo and trio exome data analysis.
+# Trimming : true, false - default : false . True will run the trimming process using fastp
+
+source iderare.sh --mode solo --trimming false
 ```
 
 
