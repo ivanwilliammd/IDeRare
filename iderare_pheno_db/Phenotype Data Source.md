@@ -4,7 +4,7 @@
 1. HPO to SNOMED map : ```hp.obo``` from [HPO Ontology download](https://hpo.jax.org/app/data/ontology)
 2. HPO complete ontology data from [HPO annotation download](https://hpo.jax.org/app/data/annotations)
 3. SNOMED CT to ORPHA map : See further instruction below
-4. ORPHA to OMIM map : ```ORDO_en_4.4.owl``` from [ORDO download link at Bioportal](https://bioportal.bioontology.org/ontologies/ORDO)
+4. ORPHA to OMIM map : ```ORDO``` from [ORDO download link at Bioportal](https://bioportal.bioontology.org/ontologies/ORDO)
 5. LOINC to HPO map : ```loinc2hpo-annotations.tsv``` from [LOINC 2 HPO annotation](https://github.com/TheJacksonLaboratory/loinc2hpoAnnotation.git)
 
 
