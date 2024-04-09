@@ -47,8 +47,8 @@ cd ../
 source install_dependencies.sh --skip-executable
 ```
 
-### OPTIONAL - Phenotype Translation, Linkage Analysis, Phenotype Similarity Scoring, Gene-disease recommendation (iderare_pheno.py)
-Interactive Webapps Implementation of **iderare_pheno.py** hosted at [Streamlit](https://bioinformatics-ivanwilliamharsono.streamlitapp.com/IDeRare_Pheno)
+### OPTIONAL - Phenotype Translation, Linkage Analysis, Phenotype Similarity Scoring, Gene-disease recommendation (iderare_phenomizing.py)
+Interactive Webapps Implementation of **iderare_phenomizing.py** hosted at [Streamlit](https://bioinformatics-ivanwilliamharsono.streamlitapp.com/iderare_phenomizing)
 
 1. This script is recommended if you would like to do conversion, linkage analysis, similarity scoring, and gene-disease recommendation based on the phenotype data provided at [clinical_data.txt](clinical_data.txt). Full feature : 
     1. Convert the phenotype data to HPO code (accept mixed SNOMED, LOINC, and HPO code)
@@ -59,22 +59,25 @@ Interactive Webapps Implementation of **iderare_pheno.py** hosted at [Streamlit]
     5. Linkage analysis of recommended causative gene and disease based on phenotype data (include dendrogram tree visualization).
         - This should help clinician to **explore / enrich their differential diagnosis** based on the patient\'s phenotype.
     6. Example of the clinical data provided at [Clinical Information Example section](#clinical-information-example)
-2. Run ```iderare_pheno.sh``` (Interactive jupyter notebook available [here](backbone/iderare_pheno.ipynb))<br>
+2. Run ```iderare_phenomizing.sh```
+3. **Advance usage** : you could add extra parameter of **threshold**, top-n **differential** diagnoses gene, and number of gene / diagnoses **recommendation** by using the 
 ```bash
-# Advance usage of the script : available at iderare_pheno.sh file
-source iderare_pheno.sh
+source iderare_phenomizing.sh --threshold 0.5 --differential 5 --recommendation 5
 ```
-1. The output of this file will be saved on [output folder](output), with the file tree and explanation as following.
+
+For more detail, please refer to [iderare-pheno](https://github.com/ivanwilliammd/iderare-pheno) Python library created by us and see [iderare-pheno Playbook](https://github.com/ivanwilliammd/iderare-pheno/blob/main/Playbook.ipynb) for demonstration of phenotype conversion and analysis.
+
+4. The output of this file will be saved on [output folder](output), with the file tree and explanation as following.
 ```
 .
 └── output
-    ├── {datetime}_Linkage of DDx.png
-    ├── {datetime}_Linkage of DDx with threshold .png
-    ├── {datetime}_Linkage of Causative Gene with.png
-    ├── {datetime}_Linkage of Causative Disease w.png
+    ├── {datetime}_linkage_all_ddx.png
+    ├── {datetime}_linkage_filt_ddx.png
+    ├── {datetime}_linkage_gene.png
+    ├── {datetime}_linkage_disease.png
     ├── {datetime}_differential_diagnosis_similarity.tsv
-    ├── {datetime}_differential_recommended_disease_similarity.tsv
-    ├── {datetime}_differential_recommended_gene_similarity.tsv
+    ├── {datetime}_recommended_disease_similarity.tsv
+    ├── {datetime}_recommended_gene_similarity.tsv
     ├── {datetime}_transformed_hpo_set.tsv
     └── {datetime}_transformed_hpo_set.txt
 ```

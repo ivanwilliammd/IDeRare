@@ -202,4 +202,4 @@ conda activate iderare
 echo "Install Python Dependencies"
 conda install pandas pyyaml numpy scipy matplotlib -y
 pip install iderare-pheno
-conda deactivate iderare
+conda deactivate

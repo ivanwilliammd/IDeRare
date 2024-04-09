@@ -37,9 +37,9 @@ conda activate iderare
 
 # Pass parameters to Python script
 if "$add_yml"; then
-    python backbone/iderare_pheno.py --threshold "$threshold" --differential "$differential" --recommendation "$recommendation" --add-yml
+    python backbone/iderare_phenomizing.py --threshold "$threshold" --differential "$differential" --recommendation "$recommendation" --add-yml
 else
-    python backbone/iderare_pheno.py --threshold "$threshold" --differential "$differential" --recommendation "$recommendation"
+    python backbone/iderare_phenomizing.py --threshold "$threshold" --differential "$differential" --recommendation "$recommendation"
 fi
 
 conda deactivate
