@@ -157,8 +157,6 @@ curl -s -L "https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.l
 sudo apt-get update && sudo apt-get install "${APT_ARGS[@]}" nvidia-docker2
 sudo systemctl restart docker
 
-fi 
-
 echo "STEP 8: Dry Run NVIDIA Docker 2 using GPU"
 #### Test nvidia-smi with the latest official CUDA image
 docker run --gpus 1 nvidia/cuda:11.3.0-base-ubuntu20.04 nvidia-smi
