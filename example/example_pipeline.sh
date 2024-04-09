@@ -9,74 +9,41 @@ echo "STEP 0 : Setup Variable, Directory, and Ensure NVIDIA Docker Supported"
 # -------------------
 echo "STEP 0a: Set variable necessary"
 
-BIN_VERSION=
-memory=
-DEEPTRIO_MODEL=
+BIN_VERSION=1.5.0
+memory=60G
+DEEPTRIO_MODEL=WES
 
-glnexus_version=
-tiddit_version=
+glnexus_version=1.4.1
+tiddit_version=3.6.1--py38h24c8ff8_0
 
 # Father
-father_name=
+father_name=V350145665_L04_B5EHOMdmhwXAACA-519
 
 # Mother
-mother_name=
+mother_name=V350145665_L04_B5EHOMdmhwXAABA-517
 
 # Proband
-proband_name=
+proband_name=V350145665_L04_B5EHOMdmhwXAAAA-515
 
 proband_SM=Proband
-proband_PU=
-proband_PL=
+proband_PU=AgilentV6
+proband_PL=DNBSeq
 proband_LB=WXS
 
-exomiser_solo=_exomiser_solo.yml
-exomiser_solo_sv=_tiddit_exomiser_solo.yml
-exomiser_trio=_exomiser_trio.yml
+exomiser_solo=V350145665_L04_B5EHOMdmhwXAAAA-515_exomiser_solo.yml
+exomiser_solo_sv=V350145665_L04_B5EHOMdmhwXAAAA-515_tiddit_exomiser_solo.yml
+exomiser_trio=V350145665_L04_B5EHOMdmhwXAAAA-515_exomiser_trio.yml
 
 mother_SM=Mother
-mother_PU=
-mother_PL=
+mother_PU=AgilentV6
+mother_PL=DNBSeq
 mother_LB=WXS
 
 father_SM=Father
-father_PU=
-father_PL=
+father_PU=AgilentV6
+father_PL=DNBSeq
 father_LB=WXS
 
-trimming=true
-solo_analysis=true
-trio_analysis=true
-
-# Check if BIN_VERSION is null
-if [ -z "$BIN_VERSION" ]; then
-    echo "BIN_VERSION is null, stopping the pipeline."
-    exit 1
-fi
-
-# Check if memory is null
-if [ -z "$memory" ]; then
-    echo "memory is null, stopping the pipeline."
-    exit 1
-fi
-
-# Check if DEEPTRIO_MODEL is null
-if [ -z "$DEEPTRIO_MODEL" ]; then
-    echo "DEEPTRIO_MODEL is null, stopping the pipeline."
-    exit 1
-fi
-
-# Check if glnexus_version is null
-if [ -z "$glnexus_version" ]; then
-    echo "glnexus_version is null, stopping the pipeline."
-    exit 1
-fi
-
-# Check if tiddit_version is null
-if [ -z "$tiddit_version" ]; then
-    echo "tiddit_version is null, stopping the pipeline."
-    exit 1
-fi
 
 # -------------------
 ## Step 0b: Prepare directory and pedigree file
@@ -84,7 +51,7 @@ fi
 echo "STEP 0b: Prepare directory and pedigree file"
 
 ## Pedigree file on INPUT_DIR (Just file name only)
-INPUT_DIR="/input"
+INPUT_DIR="/home/ivanwilliamharsono/Downloads/trio_patient/input"
 PEDIGREE="trio.ped"
 
 ## Subfolder of INPUT_DIR
@@ -92,23 +59,23 @@ FASTQ_DIR=${INPUT_DIR}/A_FASTQ
 SAM_DIR=${INPUT_DIR}/B_RAW_SAM_BAM
 
 ## Output Dir
-OUTPUT_DIR="/output"
-ANNOTATED_DIR="/annotated"
-SV_DIR="/sv_tiddit"
-EXOMISER_DIR="/exomiser"
+OUTPUT_DIR="/home/ivanwilliamharsono/Downloads/trio_patient/output"
+ANNOTATED_DIR="/home/ivanwilliamharsono/Downloads/trio_patient/annotated"
+SV_DIR="/home/ivanwilliamharsono/Downloads/trio_patient/sv_tiddit"
+EXOMISER_DIR="/home/ivanwilliamharsono/Downloads/trio_patient/exomiser"
 
 ## FASTA file on REFERENCE_DIR (Just file name only)
-REFERENCE_DIR=
-REFSEQ_FASTA=
+REFERENCE_DIR=/home/ivanwilliamharsono/Downloads/Database
+REFSEQ_FASTA=hg38.p14.fa
 
-snpEff_dir=
-snpEff_ver=
-dbnsfp=
-dbSNP=
-ClinVar=
-chr_rename=
+snpEff_dir=/home/ivanwilliamharsono/Downloads/Sandbox/snpEff/data
+snpEff_ver=GRCh38.p14
+dbnsfp=/home/ivanwilliamharsono/Downloads/Database/dbNSFPv4.5a_custombuild.gz
+dbSNP=/home/ivanwilliamharsono/Downloads/Database/Homo_sapiens_assembly38.dbsnp156_snpsift.fixed.vcf.gz
+ClinVar=/home/ivanwilliamharsono/Downloads/Database/clinvar_20240215.vcf.gz
+chr_rename=/home/ivanwilliamharsono/Downloads/IDeRare/convert/vcf_rename.chrnames
 
-cd 
+cd /home/ivanwilliamharsono/Downloads/trio_patient
 
 ## Make Directory
 mkdir -p ${INPUT_DIR} ${FASTQ_DIR} ${SAM_DIR} ${OUTPUT_DIR} ${OUTPUT_DIR}/intermediate_results_dir_proband ${OUTPUT_DIR}/intermediate_results_dir_trio ${ANNOTATED_DIR} ${SV_DIR} ${EXOMISER_DIR}
@@ -117,62 +84,41 @@ mkdir -p ${INPUT_DIR} ${FASTQ_DIR} ${SAM_DIR} ${OUTPUT_DIR} ${OUTPUT_DIR}/interm
 # STEP 1: QC - Run fastqp 
 # -------------------
 echo "STEP 1: QC - Run fastqp - Optional (if the input is raw untrimmed fastq)"
-echo "STEP 1a : Proband"
+# echo "STEP 1a : Proband"
 
-# Check if proband_name is null
-if [ -z "$proband_name" ]; then
-    echo "proband_name is null, stopping the pipeline."
-    exit 1
-else
-    echo "proband_name is not null, continuing alignment."
-    
-    fastp -g -x -w $(nproc) \
-        -D --dup_calc_accuracy 6 \
-        --in1 ${FASTQ_DIR}/${proband_name}_1.fastq \
-        --in2 ${FASTQ_DIR}/${proband_name}_2.fastq \
-        --out1 ${FASTQ_DIR}/${proband_name}_1.fq.gz \
-        --out2 ${FASTQ_DIR}/${proband_name}_2.fq.gz \
-        -h ${FASTQ_DIR}/${proband_name}.html \
-        -j ${FASTQ_DIR}/${proband_name}.json \
-        -R ${proband_name}-${proband_SM}
-fi
+# fastp -g -x -w $(nproc) \
+#     -D --dup_calc_accuracy 6 \
+#     --in1 ${FASTQ_DIR}/${proband_name}_1.fastq \
+#     --in2 ${FASTQ_DIR}/${proband_name}_2.fastq \
+#     --out1 ${FASTQ_DIR}/${proband_name}_1.fq.gz \
+#     --out2 ${FASTQ_DIR}/${proband_name}_2.fq.gz \
+#     -h ${FASTQ_DIR}/${proband_name}.html \
+#     -j ${FASTQ_DIR}/${proband_name}.json \
+#     -R ${proband_name}-${proband_SM}
 
-echo "STEP 1b : Mother"
+# echo "STEP 1b : Mother"
 
-# Check if mother_name is null
-if [ -z "$mother_name" ]; then
-    echo "mother_name is null, stopping the pipeline."
-    exit 1
-else
-    echo "mother_name is not null, continuing alignment."
-    
-    fastp -g -x -w $(nproc) \
-        -D --dup_calc_accuracy 6 \
-        --in1 ${FASTQ_DIR}/${mother_name}_1.fastq \
-        --in2 ${FASTQ_DIR}/${mother_name}_2.fastq \
-        --out1 ${FASTQ_DIR}/${mother_name}_1.fq.gz \
-        --out2 ${FASTQ_DIR}/${mother_name}_2.fq.gz \
-        -h ${FASTQ_DIR}/${mother_name}.html \
-        -j ${FASTQ_DIR}/${mother_name}.json \
-        -R ${mother_name}-${mother_SM}
-fi
+# fastp -g -x -w $(nproc) \
+#     -D --dup_calc_accuracy 6 \
+#     --in1 ${FASTQ_DIR}/${mother_name}_1.fastq \
+#     --in2 ${FASTQ_DIR}/${mother_name}_2.fastq \
+#     --out1 ${FASTQ_DIR}/${mother_name}_1.fq.gz \
+#     --out2 ${FASTQ_DIR}/${mother_name}_2.fq.gz \
+#     -h ${FASTQ_DIR}/${mother_name}.html \
+#     -j ${FASTQ_DIR}/${mother_name}.json \
+#     -R ${mother_name}-${mother_SM}
 
-echo "STEP 1C : Father"
-if [ -z "$father_name" ]; then
-    echo "father_name is null, stopping the pipeline."
-    exit 1
-else
-    echo "father_name is not null, continuing alignment."
-    fastp -g -x -w $(nproc) \
-        -D --dup_calc_accuracy 6 \
-        --in1 ${FASTQ_DIR}/${father_name}_1.fastq \
-        --in2 ${FASTQ_DIR}/${father_name}_2.fastq \
-        --out1 ${FASTQ_DIR}/${father_name}_1.fq.gz \
-        --out2 ${FASTQ_DIR}/${father_name}_2.fq.gz \
-        -h ${FASTQ_DIR}/${father_name}.html \
-        -j ${FASTQ_DIR}/${father_name}.json \
-        -R ${father_name}-${father_SM}
-fi
+# echo "STEP 1C : Father"
+
+# fastp -g -x -w $(nproc) \
+#     -D --dup_calc_accuracy 6 \
+#     --in1 ${FASTQ_DIR}/${father_name}_1.fastq \
+#     --in2 ${FASTQ_DIR}/${father_name}_2.fastq \
+#     --out1 ${FASTQ_DIR}/${father_name}_1.fq.gz \
+#     --out2 ${FASTQ_DIR}/${father_name}_2.fq.gz \
+#     -h ${FASTQ_DIR}/${father_name}.html \
+#     -j ${FASTQ_DIR}/${father_name}.json \
+#     -R ${father_name}-${father_SM}
 
 # --------------------------------------
 # STEP 2: Map to reference using BWA-MEM2

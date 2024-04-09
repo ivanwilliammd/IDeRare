@@ -44,6 +44,39 @@ father_PU={{library}}
 father_PL={{method}}
 father_LB=WXS
 
+trimming={{trimming}}
+solo_analysis={{solo_analysis}}
+trio_analysis={{trio_analysis}}
+
+# Check if BIN_VERSION is null
+if [ -z "$BIN_VERSION" ]; then
+    echo "BIN_VERSION is null, stopping the pipeline."
+    exit 1
+fi
+
+# Check if memory is null
+if [ -z "$memory" ]; then
+    echo "memory is null, stopping the pipeline."
+    exit 1
+fi
+
+# Check if DEEPTRIO_MODEL is null
+if [ -z "$DEEPTRIO_MODEL" ]; then
+    echo "DEEPTRIO_MODEL is null, stopping the pipeline."
+    exit 1
+fi
+
+# Check if glnexus_version is null
+if [ -z "$glnexus_version" ]; then
+    echo "glnexus_version is null, stopping the pipeline."
+    exit 1
+fi
+
+# Check if tiddit_version is null
+if [ -z "$tiddit_version" ]; then
+    echo "tiddit_version is null, stopping the pipeline."
+    exit 1
+fi
 
 # -------------------
 ## Step 0b: Prepare directory and pedigree file
@@ -84,41 +117,62 @@ mkdir -p ${INPUT_DIR} ${FASTQ_DIR} ${SAM_DIR} ${OUTPUT_DIR} ${OUTPUT_DIR}/interm
 # STEP 1: QC - Run fastqp 
 # -------------------
 echo "STEP 1: QC - Run fastqp - Optional (if the input is raw untrimmed fastq)"
-# echo "STEP 1a : Proband"
+echo "STEP 1a : Proband"
 
-# fastp -g -x -w $(nproc) \
-#     -D --dup_calc_accuracy 6 \
-#     --in1 ${FASTQ_DIR}/${proband_name}_1.fastq \
-#     --in2 ${FASTQ_DIR}/${proband_name}_2.fastq \
-#     --out1 ${FASTQ_DIR}/${proband_name}_1.fq.gz \
-#     --out2 ${FASTQ_DIR}/${proband_name}_2.fq.gz \
-#     -h ${FASTQ_DIR}/${proband_name}.html \
-#     -j ${FASTQ_DIR}/${proband_name}.json \
-#     -R ${proband_name}-${proband_SM}
+# Check if proband_name is null
+if [ -z "$proband_name" ]; then
+    echo "proband_name is null, stopping the pipeline."
+    exit 1
+else
+    echo "proband_name is not null, continuing alignment."
+    
+    fastp -g -x -w $(nproc) \
+        -D --dup_calc_accuracy 6 \
+        --in1 ${FASTQ_DIR}/${proband_name}_1.fastq \
+        --in2 ${FASTQ_DIR}/${proband_name}_2.fastq \
+        --out1 ${FASTQ_DIR}/${proband_name}_1.fq.gz \
+        --out2 ${FASTQ_DIR}/${proband_name}_2.fq.gz \
+        -h ${FASTQ_DIR}/${proband_name}.html \
+        -j ${FASTQ_DIR}/${proband_name}.json \
+        -R ${proband_name}-${proband_SM}
+fi
 
-# echo "STEP 1b : Mother"
+echo "STEP 1b : Mother"
 
-# fastp -g -x -w $(nproc) \
-#     -D --dup_calc_accuracy 6 \
-#     --in1 ${FASTQ_DIR}/${mother_name}_1.fastq \
-#     --in2 ${FASTQ_DIR}/${mother_name}_2.fastq \
-#     --out1 ${FASTQ_DIR}/${mother_name}_1.fq.gz \
-#     --out2 ${FASTQ_DIR}/${mother_name}_2.fq.gz \
-#     -h ${FASTQ_DIR}/${mother_name}.html \
-#     -j ${FASTQ_DIR}/${mother_name}.json \
-#     -R ${mother_name}-${mother_SM}
+# Check if mother_name is null
+if [ -z "$mother_name" ]; then
+    echo "mother_name is null, stopping the pipeline."
+    exit 1
+else
+    echo "mother_name is not null, continuing alignment."
+    
+    fastp -g -x -w $(nproc) \
+        -D --dup_calc_accuracy 6 \
+        --in1 ${FASTQ_DIR}/${mother_name}_1.fastq \
+        --in2 ${FASTQ_DIR}/${mother_name}_2.fastq \
+        --out1 ${FASTQ_DIR}/${mother_name}_1.fq.gz \
+        --out2 ${FASTQ_DIR}/${mother_name}_2.fq.gz \
+        -h ${FASTQ_DIR}/${mother_name}.html \
+        -j ${FASTQ_DIR}/${mother_name}.json \
+        -R ${mother_name}-${mother_SM}
+fi
 
-# echo "STEP 1C : Father"
-
-# fastp -g -x -w $(nproc) \
-#     -D --dup_calc_accuracy 6 \
-#     --in1 ${FASTQ_DIR}/${father_name}_1.fastq \
-#     --in2 ${FASTQ_DIR}/${father_name}_2.fastq \
-#     --out1 ${FASTQ_DIR}/${father_name}_1.fq.gz \
-#     --out2 ${FASTQ_DIR}/${father_name}_2.fq.gz \
-#     -h ${FASTQ_DIR}/${father_name}.html \
-#     -j ${FASTQ_DIR}/${father_name}.json \
-#     -R ${father_name}-${father_SM}
+echo "STEP 1C : Father"
+if [ -z "$father_name" ]; then
+    echo "father_name is null, stopping the pipeline."
+    exit 1
+else
+    echo "father_name is not null, continuing alignment."
+    fastp -g -x -w $(nproc) \
+        -D --dup_calc_accuracy 6 \
+        --in1 ${FASTQ_DIR}/${father_name}_1.fastq \
+        --in2 ${FASTQ_DIR}/${father_name}_2.fastq \
+        --out1 ${FASTQ_DIR}/${father_name}_1.fq.gz \
+        --out2 ${FASTQ_DIR}/${father_name}_2.fq.gz \
+        -h ${FASTQ_DIR}/${father_name}.html \
+        -j ${FASTQ_DIR}/${father_name}.json \
+        -R ${father_name}-${father_SM}
+fi
 
 # --------------------------------------
 # STEP 2: Map to reference using BWA-MEM2
