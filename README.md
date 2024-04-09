@@ -107,8 +107,8 @@ For more detail, please refer to [iderare-pheno](https://github.com/ivanwilliamm
 ![Example File](picture/02.png)
 1. Run the bash script
 ```bash
-# Mode : both, solo, trio - default : both . Both will run the pipeline for solo and trio exome data analysis.
-# Trimming : true, false - default : false . True will run the trimming process using fastp
+# Mode : both / solo / trio - default : both . Both will run the pipeline for solo and trio exome data analysis.
+# Trimming : true / false - default : false . True will run the trimming process using fastp
 
 source iderare.sh --mode solo --trimming false
 ```

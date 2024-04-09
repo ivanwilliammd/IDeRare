@@ -373,13 +373,13 @@ fi
 
 ### Remove Intermediate SAM BAM file as it consumes too much spaces
 
-#### Remove all in one folder 
-rm ${SAM_DIR}/*.sam ${SAM_DIR}/*.bam
-
-#### Remove one by one
-rm ${SAM_DIR}/${proband_name}_raw.sam ${SAM_DIR}/${mother_name}_raw.sam ${SAM_DIR}/${father_name}_raw.sam
-rm ${SAM_DIR}/${proband_name}_raw.bam ${SAM_DIR}/${mother_name}_raw.bam ${SAM_DIR}/${father_name}_raw.bam
-rm ${SAM_DIR}/${proband_name}_dedup.bam ${SAM_DIR}/${mother_name}_dedup.bam ${SAM_DIR}/${father_name}_dedup.bam
+# Check if the directory exists
+if [ -d "$SAM_DIR" ]; then
+    echo "Remove all data inside SAM directory to save harddisk space"
+    rm -r "$SAM_DIR"
+else
+    echo "Directory $SAM_DIR does not exist."
+fi
 
 # ----------------------------------------------
 # STEP 4: Variant Calling
@@ -389,8 +389,8 @@ if [ ! -z "$proband_name" ] && [ "$solo_analysis" = true ]; then
     echo "STEP 4a: Variant Calling Proband DeepVariant"
 
     # Further check if ${INPUT_DIR}/${proband_name}.bam all exists
-    if [ -f ${INPUT_DIR}/${proband_name}.bam ]; then
-        if [ -f ${OUTPUT_DIR}/${proband_name}_proband.vcf.gz]; then
+    if [ -f "${INPUT_DIR}/${proband_name}.bam" ]; then
+        if [ -f "${OUTPUT_DIR}/${proband_name}_proband.vcf.gz" ]; then
             echo "VCF file exist, skipping DeepVariant"
         else
             echo "BAM file exist, continue to DeepVariant"
@@ -425,9 +425,9 @@ if [ ! -z "$proband_name" ] && [ "$trio_analysis" = true ]; then
     echo "STEP 4b: Variant Calling DeepTrio"
 
     # Further check if ${INPUT_DIR}/${father_name}.bam and ${INPUT_DIR}/${mother_name}.bam and ${INPUT_DIR}/${proband_name}.bam all exists
-    if [ -f ${INPUT_DIR}/${father_name}.bam ] && [ -f ${INPUT_DIR}/${mother_name}.bam ] && [ -f ${INPUT_DIR}/${proband_name}.bam ]; then
+    if [ -f "${INPUT_DIR}/${father_name}.bam" ] && [ -f "${INPUT_DIR}/${mother_name}.bam" ] && [ -f "${INPUT_DIR}/${proband_name}.bam" ]; then
 
-        if [ -f ${OUTPUT_DIR}/${proband_name}.g.vcf.gz] && [ -f ${OUTPUT_DIR}/${father_name}.g.vcf.gz] && [ -f ${OUTPUT_DIR}/${mother_name}.g.vcf.gz]; then
+        if [ -f "${OUTPUT_DIR}/${proband_name}.g.vcf.gz" ] && [ -f "${OUTPUT_DIR}/${father_name}.g.vcf.gz" ] && [ -f "${OUTPUT_DIR}/${mother_name}.g.vcf.gz" ]; then
             echo "gVCF file exist, skipping DeepTrio"
         else
             echo "All BAM files exist, continue to DeepTrio"

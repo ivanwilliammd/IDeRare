@@ -26,6 +26,11 @@ done
 conda activate iderare
 
 # Pass parameters to Python script
-python backbone/iderare_prep.py --mode "$mode" --trimming "$trimming"
+## If trimming=True, then the script will run the trimming process --trimming, else, only pass mode
+if [ "$trimming" = true ]; then
+    python backbone/iderare_prep.py --mode "$mode" --trimming
+else
+    python backbone/iderare_prep.py --mode "$mode"
+fi
 
 source pipeline.sh
