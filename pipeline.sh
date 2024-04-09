@@ -45,7 +45,7 @@ father_PL=DNBSeq
 father_LB=WXS
 
 trimming=false
-solo_analysis=false
+solo_analysis=true
 trio_analysis=true
 
 # Check if BIN_VERSION is null
@@ -767,7 +767,7 @@ fi
 
 # Check if trio_analysis is true
 if [ "$trio_analysis" = true ]; then
-    echo "STEP 9: Exomiser SNP Solo Trio Analysis"
+    echo "STEP 9: Exomiser SNP Trio Analysis"
     exomiser --analysis ${exomiser_trio}
 fi
 

@@ -47,6 +47,11 @@ cd ../
 source install_dependencies.sh --skip-executable
 ```
 
+**Tips :** 
+
+To log all bash script (.sh) run, you could use ```script``` command to log the terminal output to a file. Example : ```script -a install.log```
+
+
 ### OPTIONAL - Phenotype Translation, Linkage Analysis, Phenotype Similarity Scoring, Gene-disease recommendation (iderare_phenomizing.py)
 Interactive Webapps Implementation of **iderare_phenomizing.py** hosted at [Streamlit](https://bioinformatics-ivanwilliamharsono.streamlitapp.com/iderare_phenomizing)
 
