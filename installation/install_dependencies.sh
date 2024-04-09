@@ -201,5 +201,5 @@ conda create --name iderare python=3.8 -y
 conda activate iderare
 echo "Install Python Dependencies"
 conda install pandas pyyaml numpy scipy matplotlib -y
-pip install hpo3 --upgrade
+pip install iderare-pheno
 conda deactivate iderare
