@@ -1,8 +1,8 @@
 # %%
 import argparse
 from datetime import datetime
-from iderare_pheno.converter import term2omim, term2orpha, term2hpo, batchconvert
-from iderare_pheno.simrec import hpo2omim_similarity, omim_recommendation, hpo2name
+from iderare_pheno.converter import batchconvert
+from iderare_pheno.simrec import hpo2omim_similarity, omim_recommendation, hpo2name, omim2name
 from iderare_pheno.utils import linkage_dendrogram, list2tsv, generate_yml
 
 # %%
@@ -74,6 +74,9 @@ if __name__ == "__main__":
     hpo_name = hpo2name(hpo_sets)
     print('Save the HPO sets as tsv file.')
     list2tsv(hpo_sets, hpo_name, filename='output/{}_transformed_hpo_set'.format(datetime.now().strftime("%Y%m%d_%H%M%S")))
+
+    omim_name = omim2name(diagnosis_sets)
+    list2tsv(diagnosis_sets, omim_name, filename='output/{}_transformed_omim_set'.format(datetime.now().strftime("%Y%m%d_%H%M%S")))
 
     print('Saving differential diagnosis sets similarity result into tsv file.')
     list2tsv(sr_dis_id, sr_dis_name, s_sim, filename='output/{}_differential_diagnosis_similarity'.format(datetime.now().strftime("%Y%m%d_%H%M%S")))

@@ -89,6 +89,7 @@ For more detail, please refer to [iderare-pheno](https://github.com/ivanwilliamm
     ├── {datetime}_recommended_disease_similarity.tsv
     ├── {datetime}_recommended_gene_similarity.tsv
     ├── {datetime}_transformed_hpo_set.tsv
+    ├── {datetime}_transformed_omim_set.tsv
     └── {datetime}_transformed_hpo_set.txt
 ```
 
