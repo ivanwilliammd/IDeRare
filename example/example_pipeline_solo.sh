@@ -141,14 +141,14 @@ echo "STEP 1: QC - Run fastqp - Optional (if the input is raw untrimmed fastq)"
 if [ ! -z "$proband_name" ] && [ "$trimming" = true ]; then
     echo "STEP 1a : Proband"
 
-    if [ -f ${FASTQ_DIR}/${proband_name}_1.fastq ] && [ -f ${FASTQ_DIR}/${proband_name}_2.fastq ]; then
+    if [ -f "${FASTQ_DIR}/${proband_name}_1.fastq" ] && [ -f "${FASTQ_DIR}/${proband_name}_2.fastq" ]; then
         echo "Raw fastq exist, continue to Trimming"
     else
         echo "File not exist, please check the input directory"
         exit 1
     fi
 
-    if [ -f ${FASTQ_DIR}/${proband_name}_1.fq.gz ] && [ -f ${FASTQ_DIR}/${proband_name}_2.fq.gz ]; then
+    if [ -f "${FASTQ_DIR}/${proband_name}_1.fq.gz" ] && [ -f "${FASTQ_DIR}/${proband_name}_2.fq.gz" ]; then
         echo "Output fq.qz exist, skipping Trimming"
     else
         echo "File not exist, continue to Trimming"
@@ -169,14 +169,14 @@ fi
 if [ ! -z "$mother_name" ] && [ "$trimming" = true ] && [ "$trio_analysis" = true ]; then
     echo "STEP 1b : Mother"
     
-    if [ -f ${FASTQ_DIR}/${mother_name}_1.fastq ] && [ -f ${FASTQ_DIR}/${mother_name}_2.fastq ]; then
+    if [ -f "${FASTQ_DIR}/${mother_name}_1.fastq" ] && [ -f "${FASTQ_DIR}/${mother_name}_2.fastq" ]; then
         echo "Raw fastq exist, continue to Trimming"
     else
         echo "File not exist, please check the input directory"
         exit 1
     fi
 
-    if [ -f ${FASTQ_DIR}/${mother_name}_1.fq.gz ] && [ -f ${FASTQ_DIR}/${mother_name}_2.fq.gz ]; then
+    if [ -f "${FASTQ_DIR}/${mother_name}_1.fq.gz" ] && [ -f "${FASTQ_DIR}/${mother_name}_2.fq.gz" ]; then
         echo "Output fq.qz exist, skipping Trimming"
     else
         echo "File not exist, continue to Trimming"
@@ -197,14 +197,14 @@ fi
 if [ ! -z "$father_name" ] && [ "$trimming" = true ] && [ "$trio_analysis" = true ]; then
     echo "STEP 1C : Father"
     
-    if [ -f ${FASTQ_DIR}/${father_name}_1.fastq ] && [ -f ${FASTQ_DIR}/${father_name}_2.fastq ]; then
+    if [ -f "${FASTQ_DIR}/${father_name}_1.fastq" ] && [ -f "${FASTQ_DIR}/${father_name}_2.fastq" ]; then
         echo "Raw fastq exist, continue to Trimming"
     else
         echo "File not exist, please check the input directory"
         exit 1
     fi
 
-    if [ -f ${FASTQ_DIR}/${father_name}_1.fq.gz ] && [ -f ${FASTQ_DIR}/${father_name}_2.fq.gz ]; then
+    if [ -f "${FASTQ_DIR}/${father_name}_1.fq.gz" ] && [ -f "${FASTQ_DIR}/${father_name}_2.fq.gz" ]; then
         echo "Output fq.qz exist, skipping Trimming"
     else
         echo "File not exist, continue to Trimming"
@@ -230,14 +230,14 @@ echo "STEP 2: Map to reference using BWA-MEM2"
 if [ ! -z "$proband_name" ]; then
     echo "STEP 2a : Proband"
 
-    if [ -f ${FASTQ_DIR}/${proband_name}_1.fq.gz ] && [ -f ${FASTQ_DIR}/${proband_name}_2.fq.gz ]; then
+    if [ -f "${FASTQ_DIR}/${proband_name}_1.fq.gz" ] && [ -f "${FASTQ_DIR}/${proband_name}_2.fq.gz" ]; then
         echo "Paired end fq.qz exist, continue to BWA-MEM2"
     else
         echo "File not exist, please check the input directory"
         exit 1
     fi
 
-    if [-f ${SAM_DIR}/${proband_name}_raw.sam ] || [ -f ${INPUT_DIR}/${proband_name}.bam ]; then
+    if [-f "${SAM_DIR}/${proband_name}_raw.sam" ] || [ -f "${INPUT_DIR}/${proband_name}.bam" ]; then
         echo "SAM file or final BAM file exist, skipping BWA-MEM2"
     else
         # BWA MEM2 Alignment
@@ -255,14 +255,14 @@ fi
 if [ ! -z "$mother_name" ] && [ "$trio_analysis" = true ]; then
     echo "STEP 2b : Mother"
 
-    if [ -f ${FASTQ_DIR}/${mother_name}_1.fq.gz ] && [ -f ${FASTQ_DIR}/${mother_name}_2.fq.gz ]; then
+    if [ -f "${FASTQ_DIR}/${mother_name}_1.fq.gz" ] && [ -f "${FASTQ_DIR}/${mother_name}_2.fq.gz" ]; then
         echo "Paired end fq.qz exist, continue to BWA-MEM2"
     else
         echo "File not exist, please check the input directory"
         exit 1
     fi
     
-    if [-f ${SAM_DIR}/${mother_name}_raw.sam ] || [ -f ${INPUT_DIR}/${mother_name}.bam ]; then
+    if [-f "${SAM_DIR}/${mother_name}_raw.sam" ] || [ -f "${INPUT_DIR}/${mother_name}.bam" ]; then
         echo "SAM file or final BAM file exist, skipping BWA-MEM2"
     else
         # BWA MEM2 Alignment
@@ -280,14 +280,14 @@ fi
 if [ ! -z "$father_name" ] && [ "$trio_analysis" = true ]; then
     echo "STEP 2c : Father"
     
-    if [ -f ${FASTQ_DIR}/${father_name}_1.fq.gz ] && [ -f ${FASTQ_DIR}/${father_name}_2.fq.gz ]; then
+    if [ -f "${FASTQ_DIR}/${father_name}_1.fq.gz" ] && [ -f "${FASTQ_DIR}/${father_name}_2.fq.gz" ]; then
         echo "Paired end fq.qz exist, continue to BWA-MEM2"
     else
         echo "File not exist, please check the input directory"
         exit 1
     fi
 
-    if [-f ${SAM_DIR}/${father_name}_raw.sam ] || [ -f ${INPUT_DIR}/${father_name}.bam ]; then
+    if [-f "${SAM_DIR}/${father_name}_raw.sam" ] || [ -f "${INPUT_DIR}/${father_name}.bam" ]; then
         echo "SAM file or final BAM file exist, skipping BWA-MEM2"
     else
         # BWA MEM2 Alignment
@@ -312,7 +312,7 @@ echo "STEP 3: Mark Duplicates and Sort - Sambamba"
 if [ ! -z "$proband_name" ]; then
     echo "STEP 3a : Proband"
 
-    if [ -f ${INPUT_DIR}/${proband_name}.bam ]; then
+    if [ -f "${INPUT_DIR}/${proband_name}.bam" ]; then
         echo "Final BAM file exist, skipping Mark Duplicates and Sort"
     else
         sambamba view -p -t=$(nproc) -l=9 \
@@ -333,7 +333,7 @@ fi
 if [ ! -z "$mother_name" ] && [ "$trio_analysis" = true ]; then
     echo "STEP 3b : Mother"
 
-    if [ -f ${INPUT_DIR}/${mother_name}.bam ]; then
+    if [ -f "${INPUT_DIR}/${mother_name}.bam" ]; then
         echo "Final BAM file exist, skipping Mark Duplicates and Sort"
     else
         sambamba view -p -t=$(nproc) -l=9 \
@@ -354,7 +354,7 @@ fi
 if [ ! -z "$father_name" ] && [ "$trio_analysis" = true ]; then
     echo "STEP 3c : Father"
     
-    if [ -f ${INPUT_DIR}/${father_name}.bam ]; then
+    if [ -f "${INPUT_DIR}/${father_name}.bam" ]; then
         echo "Final BAM file exist, skipping Mark Duplicates and Sort"
     else
         sambamba view -p -t=$(nproc) -l=9 \
@@ -373,13 +373,13 @@ fi
 
 ### Remove Intermediate SAM BAM file as it consumes too much spaces
 
-#### Remove all in one folder 
-rm ${SAM_DIR}/*.sam ${SAM_DIR}/*.bam
-
-#### Remove one by one
-rm ${SAM_DIR}/${proband_name}_raw.sam ${SAM_DIR}/${mother_name}_raw.sam ${SAM_DIR}/${father_name}_raw.sam
-rm ${SAM_DIR}/${proband_name}_raw.bam ${SAM_DIR}/${mother_name}_raw.bam ${SAM_DIR}/${father_name}_raw.bam
-rm ${SAM_DIR}/${proband_name}_dedup.bam ${SAM_DIR}/${mother_name}_dedup.bam ${SAM_DIR}/${father_name}_dedup.bam
+# Check if the directory exists
+if [ -d "$SAM_DIR" ]; then
+    echo "Remove all data inside SAM directory to save harddisk space"
+    rm -r "$SAM_DIR"
+else
+    echo "Directory $SAM_DIR does not exist."
+fi
 
 # ----------------------------------------------
 # STEP 4: Variant Calling
@@ -389,8 +389,8 @@ if [ ! -z "$proband_name" ] && [ "$solo_analysis" = true ]; then
     echo "STEP 4a: Variant Calling Proband DeepVariant"
 
     # Further check if ${INPUT_DIR}/${proband_name}.bam all exists
-    if [ -f ${INPUT_DIR}/${proband_name}.bam ]; then
-        if [ -f ${OUTPUT_DIR}/${proband_name}_proband.vcf.gz]; then
+    if [ -f "${INPUT_DIR}/${proband_name}.bam" ]; then
+        if [ -f "${OUTPUT_DIR}/${proband_name}_proband.vcf.gz" ]; then
             echo "VCF file exist, skipping DeepVariant"
         else
             echo "BAM file exist, continue to DeepVariant"
@@ -425,9 +425,9 @@ if [ ! -z "$proband_name" ] && [ "$trio_analysis" = true ]; then
     echo "STEP 4b: Variant Calling DeepTrio"
 
     # Further check if ${INPUT_DIR}/${father_name}.bam and ${INPUT_DIR}/${mother_name}.bam and ${INPUT_DIR}/${proband_name}.bam all exists
-    if [ -f ${INPUT_DIR}/${father_name}.bam ] && [ -f ${INPUT_DIR}/${mother_name}.bam ] && [ -f ${INPUT_DIR}/${proband_name}.bam ]; then
+    if [ -f "${INPUT_DIR}/${father_name}.bam" ] && [ -f "${INPUT_DIR}/${mother_name}.bam" ] && [ -f "${INPUT_DIR}/${proband_name}.bam" ]; then
 
-        if [ -f ${OUTPUT_DIR}/${proband_name}.g.vcf.gz] && [ -f ${OUTPUT_DIR}/${father_name}.g.vcf.gz] && [ -f ${OUTPUT_DIR}/${mother_name}.g.vcf.gz]; then
+        if [ -f "${OUTPUT_DIR}/${proband_name}.g.vcf.gz" ] && [ -f "${OUTPUT_DIR}/${father_name}.g.vcf.gz" ] && [ -f "${OUTPUT_DIR}/${mother_name}.g.vcf.gz" ]; then
             echo "gVCF file exist, skipping DeepTrio"
         else
             echo "All BAM files exist, continue to DeepTrio"
@@ -474,7 +474,7 @@ fi
 if [ ! -z "$proband_name" ] && [ "$trio_analysis" = true ]; then
     echo "STEP 5: Merge gVCF files with GLnexus"
 
-    if [ -f ${OUTPUT_DIR}/${proband_name}_trio_merged.vcf.gz ]; then
+    if [ -f "${OUTPUT_DIR}/${proband_name}_trio_merged.vcf.gz" ]; then
         echo "Merged VCF file exist, skipping GLnexus"
     else
         docker run \
@@ -498,22 +498,22 @@ if [ ! -z "$proband_name" ] && [ "$trio_analysis" = true ]; then
     echo "STEP 6: Calculate Mendelian Violation Rate using RTG Tools"
     #### Reference : https://www.animalgenome.org/bioinfo/resources/manuals/RTGOperationsManual.pdf
 
-    if [ -d ${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf ];
-    then
-        echo "${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf exists. Removing directory."
-        rm -r -f ${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf
-    else
-        echo "${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf directory does not exist. Continue"
-    fi
 
-    if [ -f ${OUTPUT_DIR}/${proband_name}_trio_merged.vcf.gz ]; then
+    if [ -f "${OUTPUT_DIR}/${proband_name}_trio_merged.vcf.gz" ]; then
         echo "Merged VCF file exist, continue to RTG Tools"
 
-        docker run \
-            -v "${INPUT_DIR}":"/input" \
-            -v "${REFERENCE_DIR}":"/reference" \
-            realtimegenomics/rtg-tools format \
-            -o /reference/${REFSEQ_FASTA}.sdf "/reference/${REFSEQ_FASTA}"
+        if [ -d ${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf ];
+        then
+            echo "${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf exists. Didn't create sdf."
+        else
+            echo "${REFERENCE_DIR}/${REFSEQ_FASTA}.sdf directory does not exist. Creating it"
+            docker run \
+                -v "${INPUT_DIR}":"/input" \
+                -v "${REFERENCE_DIR}":"/reference" \
+                realtimegenomics/rtg-tools format \
+                -o /reference/${REFSEQ_FASTA}.sdf "/reference/${REFSEQ_FASTA}"
+        fi
+
 
         docker run \
             -v "${INPUT_DIR}":"/input" \
@@ -543,9 +543,9 @@ if [ ! -z "$proband_name" ] && [ "$trio_analysis" = true ]; then
         echo "Merged VCF file not exist, please check the input directory"
         exit 1
     fi
-    
+fi
 
-elif [ ! -z "$proband_name" ] && [ "$solo_analysis" = true ]; then
+if [ ! -z "$proband_name" ] && [ "$solo_analysis" = true ]; then
     echo "SKIPPED STEP 5: Merge gVCF files with GLnexus, due to solo analysis (Trio)"
     echo "SKIPPED STEP 6: Calculate Mendelian Violation Rate using RTG Tools (Trio)"
 fi
@@ -559,82 +559,82 @@ fi
 if [ ! -z "$proband_name" ] && [ "$solo_analysis" = true ]; then
     echo "STEP 7a: Annotate Variants Proband - SNPEff with latest database, SnpSift ClinVar, SnpSift dbNSFP"
     
-    if [ ! -f ${OUTPUT_DIR}/${proband_name}_proband.vcf.gz] :
+    if [ ! -f "${OUTPUT_DIR}/${proband_name}_proband.vcf.gz" ]; then
         echo "VCF file not exist, please check the input directory"
         exit 1
     fi
 
     # If output file not exist, run annotate
-    if [ ! -f ${proband_name}-converted-deepVariant.vcf] && [ ! -f ${proband_name}-converted-deepVariant.vcf.gz]:
+    if [ ! -f "${proband_name}-converted-deepVariant.vcf" ] && [ ! -f "${proband_name}-converted-deepVariant.vcf.gz" ]; then
         # Create GATK > dbnsfp Chromosome
         bcftools annotate \
-            --rename-chrs ${chr_rename} \
-            --threads nproc -Oz \
-            -o ${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf \
-            ${OUTPUT_DIR}/${proband_name}_proband.vcf.gz
+            --rename-chrs "${chr_rename}" \
+            --threads "$(nproc)" -Oz \
+            -o "${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf" \
+            "${OUTPUT_DIR}/${proband_name}_proband.vcf.gz"
     else
-        echo "Deepvariant converted VCF file exist, skipping conversion"
+        echo "Deepvariant converted VCF file exists, skipping conversion"
     fi
 
     # If output file not exist yet, and previous file exist
-    if [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf.gz] && [ -f ${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf] :
+    if [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf.gz" ] && [ -f "${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf" ]; then
         # SnpEff with recent GRCh38.p14 database
-        SnpEff -v ${snpEff_ver} -dataDir ${snpEff_dir} \
-            -s ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.html \
-            ${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf \
-            > ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf
+        SnpEff -v "${snpEff_ver}" -dataDir "${snpEff_dir}" \
+            -s "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.html" \
+            "${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf" \
+            > "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf"
     else
-        echo "SnpEff VCF file exist, skipping SnpEff"
+        echo "SnpEff VCF file exists, skipping SnpEff"
     fi
 
     # If output file not exist yet, and previous file exist
-    if [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf.gz] && [ -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf] :
+    if [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf.gz" ] && [ -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf" ]; then
         # SnpSift Annotate ClinVar
-        SnpSift annotate -v ${dbSNP} \
-            ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf \
-            > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf
+        SnpSift annotate -v "${dbSNP}" \
+            "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf" \
+            > "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf"
     else
-        echo "Annotated dbSNP file exist, skipping annotation"
+        echo "Annotated dbSNP file exists, skipping annotation"
     fi
 
     # If output file not exist yet, and previous file exist
-    if [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf.gz] && [ -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf] :
-        SnpSift annotate -v ${ClinVar} \
-            ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf \
-            > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf
+    if [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf.gz" ] && [ -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf" ]; then
+        SnpSift annotate -v "${ClinVar}" \
+            "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf" \
+            > "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf"
     else
-        echo "Annotated ClinVar file exist, skipping annotation"
+        echo "Annotated ClinVar file exists, skipping annotation"
     fi
 
     # If output file not exist yet, and previous file exist
-    if [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf.gz] && [ -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf] :
+    if [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf.gz" ] && [ -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf" ]; then
         # Annotate using dbNSFP for SNP Only (Indel Give 0 Annotation Result)
-        SnpSift dbnsfp -v -db ${dbnsfp} \
-            ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf \
-            > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf
+        SnpSift dbnsfp -v -db "${dbnsfp}" \
+            "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf" \
+            > "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf"
     else
-        echo "Annotated dbNSFP file exist, skipping annotation"
+        echo "Annotated dbNSFP file exists, skipping annotation"
     fi
 
     # Compress file size using bgzip if the previous .vcf file exist
-    if [ -f ${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf] && [ ! -f ${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf.gz]: 
-        bgzip --threads nproc ${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf
+    if [ -f "${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf" ] && [ ! -f "${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf.gz" ]; then
+        bgzip --threads "$(nproc)" "${OUTPUT_DIR}/${proband_name}-converted-deepVariant.vcf"
     fi
 
-    if [ -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf.gz]: 
-        bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf
+    if [ -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf.gz" ]; then
+        bgzip --threads "$(nproc)" "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepVariant.vcf"
     fi
 
-    if [ -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf.gz]: 
-        bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf
+    if [ -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf.gz" ]; then
+        bgzip --threads "$(nproc)" "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepVariant.vcf"
     fi
 
-    if [ -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf.gz]: 
-        bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf
+    if [ -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf.gz" ]; then
+        bgzip --threads "$(nproc)" "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepVariant.vcf"
     fi
 
-    if [ -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf.gz]: 
-        bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf
+    if [ -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf.gz" ]; then
+        bgzip --threads "$(nproc)" "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepVariant.vcf"
     fi
 fi
 
@@ -644,86 +644,87 @@ if [ ! -z "$proband_name" ] && [ "$trio_analysis" = true ]; then
     echo "STEP 7b: Annotate Variants Trio - SNP Sift"
 
     # If output file not exist yet, and previous file exist
-    if [ ! -f ${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf] && [ ! -f ${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf.gz]:
+    if [ ! -f "${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf" ] && [ ! -f "${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf.gz" ]; then
         # Create GATK > dbnsfp Chromosome
         bcftools annotate \
-            --rename-chrs ${chr_rename} \
-            --threads nproc -Oz \
-            -o ${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf \
-            ${OUTPUT_DIR}/${proband_name}_trio_annotated.output.vcf.gz
+            --rename-chrs "${chr_rename}" \
+            --threads "$(nproc)" -Oz \
+            -o "${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf" \
+            "${OUTPUT_DIR}/${proband_name}_trio_annotated.output.vcf.gz"
     else
-        echo "DeepTrio converted VCF file exist, skipping conversion"
+        echo "DeepTrio converted VCF file exists, skipping conversion"
     fi
 
     # If output file not exist yet, and previous file exist
-    if [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf.gz] && [ -f ${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf] :
+    if [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf.gz" ] && [ -f "${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf" ]; then
         # SnpEff with recent GRCh38.p14 database
-        SnpEff -v ${snpEff_ver} -dataDir ${snpEff_dir} \
-            -s ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.html \
-            ${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf \
-            > ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf
+        SnpEff -v "${snpEff_ver}" -dataDir "${snpEff_dir}" \
+            -s "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.html" \
+            "${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf" \
+            > "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf"
     else
-        echo "SnpEff VCF file exist, skipping SnpEff"
+        echo "SnpEff VCF file exists, skipping SnpEff"
     fi
 
     # If output file not exist yet, and previous file exist
-    if [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf.gz] && [ -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf] :
+    if [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf.gz" ] && [ -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf" ]; then
         # SnpSift
-        SnpSift annotate -v ${dbSNP} \
-            ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf \
-            > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf
+        SnpSift annotate -v "${dbSNP}" \
+            "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf" \
+            > "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf"
     else
-        echo "Annotated dbSNP file exist, skipping annotation"
+        echo "Annotated dbSNP file exists, skipping annotation"
     fi
 
     # If output file not exist yet, and previous file exist
-    if [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf.gz] && [ -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf] :
+    if [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf.gz" ] && [ -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf" ]; then
         # SnpSift Annotate ClinVar
-        SnpSift annotate -v ${ClinVar} \
-            ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf \
-            > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf
+        SnpSift annotate -v "${ClinVar}" \
+            "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf" \
+            > "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf"
     else
-        echo "Annotated ClinVar file exist, skipping annotation"
+        echo "Annotated ClinVar file exists, skipping annotation"
     fi
 
     # If output file not exist yet, and previous file exist
-    if [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf.gz] && [ -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf] :
+    if [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf.gz" ] && [ -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf" ]; then
         # Annotate using dbNSFP for SNP Only (Indel Give 0 Annotation Result)
-        SnpSift dbnsfp -v -db ${dbnsfp} \
-            ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf \
-            > ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf
+        SnpSift dbnsfp -v -db "${dbnsfp}" \
+            "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf" \
+            > "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf"
     else
-        echo "Annotated dbNSFP file exist, skipping annotation"
+        echo "Annotated dbNSFP file exists, skipping annotation"
     fi
 
     # Compress file size using bgzip if the previous .vcf file exist
-    if [ -f ${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf] && [ ! -f ${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf.gz]: 
-        bgzip --threads nproc ${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf
+    if [ -f "${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf" ] && [ ! -f "${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf.gz" ]; then
+        bgzip --threads "$(nproc)" "${OUTPUT_DIR}/${proband_name}-converted-deepTrio.vcf"
     fi
 
-    if [ -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf.gz]: 
-        bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf
+    if [ -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf.gz" ]; then
+        bgzip --threads "$(nproc)" "${ANNOTATED_DIR}/${proband_name}-SnpEff-deepTrio.vcf"
     fi
 
-    if [ -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf.gz]: 
-        bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf
+    if [ -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf.gz" ]; then
+        bgzip --threads "$(nproc)" "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-deepTrio.vcf"
     fi
 
-    if [ -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf.gz]: 
-        bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf
+    if [ -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf.gz" ]; then
+        bgzip --threads "$(nproc)" "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-deepTrio.vcf"
     fi
 
-    if [ -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf] && [ ! -f ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf.gz]: 
-        bgzip --threads nproc ${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf
+    if [ -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf" ] && [ ! -f "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf.gz" ]; then
+        bgzip --threads "$(nproc)" "${ANNOTATED_DIR}/${proband_name}-SnpEff-dbSNP-ClinVar-dbNSFP_annotated-deepTrio.vcf"
     fi
+fi
 
 # Additional SV Step using Tiddit @ SV_DIR
 
-# Check if proband_name is not null
-if [ ! -z "$proband_name" ]; then
+# Check if proband_name is not null and annotated tiddit output is not yet exist in folder
+if [ ! -z "$proband_name" ] && [ ! -f "${SV_DIR}/output.filtered.dbnsfp.vcf" ]; then
     echo "STEP 8: SV calling using Tiddit, SnpEff annotation, SnpSift dbNSFP annotation"
 
-    if [ -f ${INPUT_DIR}/${proband_name}.bam ]; then
+    if [ -f "${INPUT_DIR}/${proband_name}.bam" ]; then
         echo "Final BAM file exist, continue to Tiddit"
         docker run \
             -v "${INPUT_DIR}":"/input"   \
@@ -752,6 +753,8 @@ if [ ! -z "$proband_name" ]; then
         echo "BAM file not exist, please check the input directory"
         exit 1
     fi
+else
+    echo "SV output folder exist, and there are already final data, skipping Tiddit"  
 fi
 
 # Step using Exomiser @ Exomiser root folder
@@ -764,12 +767,12 @@ fi
 
 # Check if trio_analysis is true
 if [ "$trio_analysis" = true ]; then
-    echo "STEP 9: Exomiser SNP Solo Trio Analysis"
+    echo "STEP 9: Exomiser SNP Trio Analysis"
     exomiser --analysis ${exomiser_trio}
 fi
 
 # Check if SV VCF is true
-if [ -f ${SV_DIR}/output.filtered.dbnsfp.vcf ]; then
-    echo "STEP 9: Exomiser SV Solo Trio Analysis"
+if [ -f "${SV_DIR}/output.filtered.dbnsfp.vcf" ]; then
+    echo "STEP 9: Exomiser SV Solo Analysis"
     exomiser --analysis ${exomiser_solo_sv}
 fi
