@@ -18,6 +18,7 @@ Ivan William Harsono<sup>a</sup>, Yulia Ariani<sup>b</sup>, Beben Benyamin<sup>c
 **Note:** Currently IDeRare paper is being considered journal submission. The citation will be updated once the paper is published.
 
 ### Description
+- IDeRare split into 2 parts, namely phenotype and genotype part.
 - This pipeline is designed to be used in Linux environment
 - Original paper may used different version of tools, and the prerequisite used in this pipeline is the latest version of the tools
 - This pipeline is designed and tested with Indonesia rare disease trio patient, but it should be also usable for general cases of rare disease variant discovery from Exome Sequences data given paired end .fq.gz file and HPO data(s)
@@ -28,6 +29,7 @@ Ivan William Harsono<sup>a</sup>, Yulia Ariani<sup>b</sup>, Beben Benyamin<sup>c
 - Explanation how to write the entry available at [Clinical Information Example section](#clinical-information-example) and file example at [example/clinical_data_example.txt](example/clinical_data_example.txt)
 - Genotype data accessible from the SRR of Bioproject database [1077459](https://www.ncbi.nlm.nih.gov/bioproject/1077459) and SRA database: with accession number [SRR27997290-SRR27997292](https://www.ncbi.nlm.nih.gov/sra?linkname=bioproject_sra_all&from_uid=1077459). **Data paper submission of this samples without Author's permission is strictly prohibited.**
 
+___
 ### Quick Installation
 1. Clone this repository
 ```bash
@@ -51,9 +53,22 @@ source install_dependencies.sh --skip-executable
 
 To log all bash script (.sh) run, you could use ```script``` command to log the terminal output to a file. Example : ```script -a install.log```
 
+___
+### IDeRare Phenotype Pipeline - Phenotype Translation, Linkage Analysis, Phenotype Similarity Scoring, Gene-disease recommendation (iderare_phenomizing.py)
+Interactive Webapps Implementation of **iderare_phenomizing.py** hosted at [Streamlit](https://bioinformatics-ivanwilliamharsono.streamlitapp.com/iderare_phenomizing) and based on our homemade Python library [iderare-pheno](https://github.com/ivanwilliammd/iderare-pheno) Python library
 
-### OPTIONAL - Phenotype Translation, Linkage Analysis, Phenotype Similarity Scoring, Gene-disease recommendation (iderare_phenomizing.py)
-Interactive Webapps Implementation of **iderare_phenomizing.py** hosted at [Streamlit](https://bioinformatics-ivanwilliamharsono.streamlitapp.com/iderare_phenomizing)
+<p align="center">
+    <a href="https://github.com/ivanwilliammd/iderare-pheno">IDeRare-Pheno stat</a> : 
+    <a href="https://pypi.org/project/iderare_pheno/">
+        <img alt="PyPI" src="https://img.shields.io/pypi/v/iderare_pheno">
+    </a>
+    <a href="https://github.com/ivanwilliammd/iderare-pheno/blob/main/LICENSE">
+        <img alt="License" src="https://img.shields.io/github/license/ivanwilliammd/iderare-pheno.svg?color=blue&cachedrop">
+    </a>
+    <a href="https://bioinformatics-ivanwilliamharsono.streamlit.app/IDeRare_Pheno">
+        <img alt="Streamlit" src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg">
+    <br/>
+</p>
 
 1. This script is recommended if you would like to do conversion, linkage analysis, similarity scoring, and gene-disease recommendation based on the phenotype data provided at [clinical_data.txt](clinical_data.txt). Full feature : 
     1. Convert the phenotype data to HPO code (accept mixed SNOMED, LOINC, and HPO code)
@@ -75,9 +90,9 @@ Interactive Webapps Implementation of **iderare_phenomizing.py** hosted at [Stre
 source iderare_phenomizing.sh --threshold 0.5 --differential 5 --recommendation 5
 ```
 
-For more detail, please refer to [iderare-pheno](https://github.com/ivanwilliammd/iderare-pheno) Python library created by us and see [iderare-pheno Playbook](https://github.com/ivanwilliammd/iderare-pheno/blob/main/Playbook.ipynb) for demonstration of phenotype conversion and analysis.
+For more detail, please refer to [iderare-pheno Playbook](https://github.com/ivanwilliammd/iderare-pheno/blob/main/Playbook.ipynb) for demonstration of phenotype conversion and analysis.
 
-4. The output of this file will be saved on [output folder](output), with the file tree and explanation as following.
+4. The output of this file will be saved on ```output``` folder, with the file tree and explanation as following.
 ```
 .
 └── output
@@ -105,7 +120,8 @@ For more detail, please refer to [iderare-pheno](https://github.com/ivanwilliamm
 | {datetime}_transformed_hpo_set.tsv | Converted clinical_data to readily used HPO code |
 | {datetime}_transformed_hpo_set.tsv | Converted clinical_data to readily used HPO list for yml |
 
-### Preparing the iderare.yml for phenotype-based-prioritization exome analysis pipeline
+___
+### IDeRare Genotype Pipeline - Preparing the iderare.yml for exome analysis and phenotype-based variant prioritization
 1. Set the data, directory file reference and trio information on ```iderare.yml```.<br><br> 
 **Note** : all exome files should be located in the ```input/A_FASTQ``` folder of absolute path setup by ```data_dir``` at ```iderare.yml```. Example of filled yml available on [example/iderare_example.yml](example/iderare_example.yml)
 <br><br>
@@ -118,7 +134,7 @@ For more detail, please refer to [iderare-pheno](https://github.com/ivanwilliamm
 
 source iderare.sh --mode solo --trimming false
 ```
-
+___
 
 ## Appendix
 <h3 id="clinical-information-example">Clinical Information Example</h3>
