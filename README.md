@@ -155,7 +155,7 @@ ___
 | Abnormal liver function | Problem List | SNOMED-CT | 75183008 | |SNOMEDCT:75183008 |
 | Impending hepatic failure | Problem List | SNOMED-CT | 59927004 | |SNOMEDCT:59927004 |
 | Osteopenia | Problem List (Radiology Finding) | SNOMED-CT | 312894000 | |SNOMEDCT:312894000 |
-| Mitral regurgitation | Problem List (Cardiology Finding) | SNOMED-CT | 56786000 | |SNOMEDCT:56786000 |
+| Mitral regurgitation | Problem List (Cardiology Finding) | SNOMED-CT | 48724000 | |SNOMEDCT:48724000 |
 | Metabolic alkalosis | Problem List (Blood Gas Analysis) | SNOMED-CT | 1388004 | | SNOMEDCT:1388004 |
 | Low Albumin Serum Level | Clinical Pathology (Lab) | LOINC | 1751-7 | L | LOINC:1751-7|L |
 | Low HDL Level | Clinical Pathology (Lab) | LOINC | 2085-9 | L | LOINC:2085-9|L |
