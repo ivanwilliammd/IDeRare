@@ -318,6 +318,9 @@ if [ ! -z "$proband_name" ]; then
         sambamba view -p -t=$(nproc) -l=9 \
             -S ${SAM_DIR}/${proband_name}_raw.sam \
             -f=bam -o=${SAM_DIR}/${proband_name}_raw.bam
+        
+        sambamba flagstat -p -t=$(nproc) \
+            ${SAM_DIR}/${proband_name}_raw.bam > ${INPUT_DIR}/${proband_name}_raw.flagstat.txt
 
         sambamba markdup -r -p -t=$(nproc) -l=9 \
             ${SAM_DIR}/${proband_name}_raw.bam \
@@ -340,6 +343,9 @@ if [ ! -z "$mother_name" ] && [ "$trio_analysis" = true ]; then
             -S ${SAM_DIR}/${mother_name}_raw.sam \
             -f=bam -o=${SAM_DIR}/${mother_name}_raw.bam
 
+        sambamba flagstat -p -t=$(nproc) \
+            ${SAM_DIR}/${mother_name}_raw.bam > ${INPUT_DIR}/${mother_name}_raw.flagstat.txt
+
         sambamba markdup -r -p -t=$(nproc) -l=9 \
             ${SAM_DIR}/${mother_name}_raw.bam \
             ${SAM_DIR}/${mother_name}_dedup.bam
@@ -360,6 +366,9 @@ if [ ! -z "$father_name" ] && [ "$trio_analysis" = true ]; then
         sambamba view -p -t=$(nproc) -l=9 \
             -S ${SAM_DIR}/${father_name}_raw.sam \
             -f=bam -o=${SAM_DIR}/${father_name}_raw.bam
+
+        sambamba flagstat -p -t=$(nproc) \
+            ${SAM_DIR}/${father_name}_raw.bam > ${INPUT_DIR}/${father_name}_raw.flagstat.txt
 
         sambamba markdup -r -p -t=$(nproc) -l=9 \
             ${SAM_DIR}/${father_name}_raw.bam \
